@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS边框</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .border{
+            /* 横向、纵向偏移距离，模糊半径、扩散半径、颜色 */
+            /* 多个不同的边框效果之间可以叠加，中间使用逗号隔开 */
+            /* 前者覆盖后者 */
+            box-shadow:0 0 5px 0 black;
+            width: 200px;
+            height: 200px;
+            border-radius:50% ;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="border">
+            <img class="border" src="https://www.bing.com/th/id/OIP.z9iq2C_Pm7ixChiZyTFRkQAAAA?w=259&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" alt="哈士奇">
+        </div>
+    </div>
+
+    
+</body>
+</html>
