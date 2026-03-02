@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三栏布局</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            display: flex;
+            align-items: top;
+            justify-content: center;
+        }
+        .all{
+            color:white;
+            font-weight: bold;
+            /* text-decoration: ; */
+            width: 600px;
+            height: 230px;
+            display: grid;
+            grid-template-columns: 150px 1fr 150px;
+            border: 1px solid #000;
+            /* place-items:center; */
+        }
+        /* 设置三个区域的单元格内部对齐样式 */
+        .all>div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .left{
+            background-color: rgba(11, 129, 240, 0.702);
+        }
+        .center{
+            color: #000;
+            background-color: white;
+        }
+        .right{
+            background-color: rgb(44, 231, 78);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="all">
+            <div class="left">左侧边栏</div>
+            <div class="center">主要内容区</div>
+            <div class="right">右侧边栏</div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

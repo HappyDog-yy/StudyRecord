@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圣杯布局(grid)</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container{
+            font-weight: bold;
+            height: 300px;
+            width: 500px;
+            display: grid;
+            grid-template-rows: 60px 1fr 60px;
+            grid-template-columns: 80px 1fr 80px;
+            color:white;
+            font-weight: bold;
+        }
+        .top{
+            padding: 20px;
+            grid-column: 1/4;
+            grid-row: 1;
+            background-color: red;
+        }
+        .footer{
+            padding: 20px;
+            grid-column: 1/4;
+            grid-row: 3;
+            background-color: rgb(51, 66, 114);
+        }
+        .left{
+            padding: 20px;
+            grid-column: 1;
+            grid-row: 2;
+            background-color: rgb(51, 75, 174);
+        }
+        .right{
+            padding: 20px;
+            grid-column: 3;
+            grid-row: 2;
+            background-color: green;
+        }
+        .center{
+            padding: 20px;
+            grid-column: 2;
+            grid-column: 2;
+            background-color: white;
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头 -->
+        <div class="top">顶部</div>
+        <!-- 左 -->
+        <div class="left">左</div>
+        <!-- 中 -->
+        <div class="center">主要内容区</div>
+        <!-- 右 -->
+        <div class="right">右</div>
+        <!-- 尾 -->
+        <div class="footer">底部</div>
+    </div>
+    
+</body>
+</html>

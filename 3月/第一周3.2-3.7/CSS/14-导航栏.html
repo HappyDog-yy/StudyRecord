@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            background-color: black;
+            color:white;
+            display: flex;
+            padding: 15px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container>div>a:visited{
+            color: white;
+            text-align: none;
+        }
+        .container>div>a:link{
+            color: white;
+            text-align: none;
+        }
+        .container div{
+            display: inline;
+            margin: 10px;
+        }
+        .new{
+            color: yellow;
+        }
+        .nav{
+            display: flex;
+            /* align-items: center; */
+            /* 要设置在弹性盒中 */
+            /* justify-content: flex-end; */
+            /* margin-left: 10px; */
+        }
+        .nav a{
+            font-size: 15px;
+            margin-left: 15px;
+            text-decoration: none;
+        }
+        .right{
+            justify-content: flex-end;
+        }
+        .logo{
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav logo"><strong>Logo</strong><img src="" alt=""></div>
+        <div class="nav">
+            <a href="" class="new" style="color: yellow;">首页</a>
+            <a href="">新闻</a>
+            <a href="">活动专区</a>
+            <a href="">游戏数据库</a>
+            <a href="">比赛</a>
+        </div>
+        <div class="nav right">
+            <a href="">登录</a>
+            <a href="">注册</a>
+        </div>
+    </div>
+    
+</body>
+</html>

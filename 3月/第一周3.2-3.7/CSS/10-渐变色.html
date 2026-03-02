@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渐变色</title>
+    <style>
+        .gradient{
+            width: 300px;
+            height: 300px;
+            /* 45度倾斜方向 */
+            /* background: linear-gradient(45deg,red,blue,pink); */
+            /* 还有4个基础方向：to top ,to buttom, to left, to right */
+            /* 颜色想设置几个设置几个 */
+            background: linear-gradient(to right,red,blue,pink,green);
+        }
+        /* 设置径向变化的渐变色 */
+        .radialColor{
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle,rgba(109, 214, 243, 0.762),pink,yellow,rgb(17, 238, 17));
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient"></div>
+    <div class="radialColor"></div>
+    
+</body>
+</html>
