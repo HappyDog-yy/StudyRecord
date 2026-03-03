@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本截断效果</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            /* 在视口中居中 */
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            /* 如果不设置高度，垂直居中将不起作用 */
+            justify-content: center;
+        }
+        .onetext{
+            color: blue;
+            /* 单行文本截断效果，必须设置宽度 */
+            width: 200px;
+            /* 设置禁止换行 */
+            white-space: nowrap;
+            /* 溢出内容隐藏 */
+            overflow: hidden;
+            /* 显示省略号 */
+            text-overflow: ellipsis;
+            /* border: 10px solid black; */
+
+            box-shadow: 0 0 5px black;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="onetext">
+        是懦夫把自己变成懦夫，生活的意义是英雄把自己活成英雄。
+        人的本能是追逐从它身边飞走的东西，却逃避追逐他的东西。
+    </div>
+</body>
+</html>
