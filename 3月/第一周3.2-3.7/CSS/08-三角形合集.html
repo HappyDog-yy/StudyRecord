@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三角形</title>
+    <style>
+        .box{
+            width: 0;
+            height: 0;
+            border: 100px solid transparent;
+            border-bottom-color: blue;
+            /* CSS中三角形的实现靠的是边框效果，
+            在盒子宽高为0的情况下，边框会占据整个盒模型，
+            首先将所有的边框都设置为透明色
+            ，然后修改你想要的方向的边框的颜色 */
+            /* transition: 0.5s; */
+            /* transform-origin: center 150px; */
+            transform-origin: calc(50%) calc(50%+50px);
+        }
+        /* 鼠标悬停时翻转三角形 */
+        .box:hover{
+            /*水平方向上翻转 */
+            /* transform: scaleX(-1); */
+            /* 竖直方向上翻转 */
+            /* transform: scaleY(-1); */
+            /* 竖直方向的翻转是针对于盒模型中心的翻转 */
+            /* 以下是针对该三角形中心的翻转 */
+            /* transition-origin修改原点 */
+            /* transform: rotate(0.5 turn); */
+            /* 将鼠标悬停时的动画设置为上面的三角形*/
+            width: 0;
+            height: 0;
+            border: 100px solid transparent;
+            border-top-color: blue;
+            transform: translateY(100px);
+            /* 将该图形向下平移100px */
+        }
+
+        .box:active{
+            /* 将鼠标点击时的动画设置为翻转三角形 */
+            /* 默认情况下的原点是50% 50% */
+            /* transform-origin: calc(50%) calc(50%+50px); */
+            transform: rotate(180 deg);
+        }
+        /* 斜三角 */
+        .triangle{
+            width: 0;
+            height: 0;
+            border: 80px solid rgb(103, 246, 160);
+            border-left-color: transparent;
+            border-top-color: transparent;
+            /* transform: rotate(60deg); */
+        }
+
+        /* 切割矩形的一般得到斜三角 */
+        .clip{
+            width: 200px;
+            height: 150px;
+            background-color: chartreuse;
+            clip-path: polygon(30% 0%,0% 70%,90% 100%);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+
+    <div class="triangle"></div>
+    <div class="clip"></div>
+</body>
+</html>
