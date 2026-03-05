@@ -1,4 +1,4 @@
-### 3.4二分查找法 搜索有序数组中目标值的位置
+### 3.3二分查找法 搜索有序数组中目标值的位置
 
 https://leetcode.cn/problems/search-insert-position/?envType=study-plan-v2&envId=top-100-liked
 
@@ -22,3 +22,42 @@ var searchInsert = function(nums, target) {
     return left;
 };
 ```
+
+
+### 3.4移除数组中的所有目标元素，并返回数组中不等于目标值的元素个数
+
+https://leetcode.cn/problems/remove-element/submissions/702931276/
+
+
+#### 暴力题解法
+```javascript
+var removeElement = function(nums, val) {
+    // 暴力解法
+    // 判断元素是否等于val，相等则将后面的元素都前移一位
+    // 此时i的值是多少，下一次循环从哪个开始
+    let size=nums.length;
+    for(let i=0;i<size;i++){
+        if(val === nums[i]){
+            // 之后的元素全部向前移动一位，后面的覆盖前面的思路
+            // 因为此时向前移动了一位，i的位置变成了i+1的元素
+            // 所以每前移一个元素，要改变i
+            for(let j=i+1;j<size;j++){
+                // 从j-1位置开始
+                nums[j-1]=nums[j];
+            }
+            // 数组总长度-1
+            size=size-1;
+            // 当全部前移之后，此时数组i位置的元素是原来i+1位置的，该元素还没有检查
+            i--;
+
+        }
+        // 如果不相等，无需任何处理
+    }
+    return size;
+};
+```
+
+#### 双指针法
+
+暂时还没学会
+task：周五晚上之前学完
