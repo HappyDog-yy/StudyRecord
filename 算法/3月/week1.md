@@ -60,4 +60,51 @@ var removeElement = function(nums, val) {
 #### 双指针法
 
 暂时还没学会
-task：周五晚上之前学完
+
+### 3.5对有序数组中的元素先平方再按照从大到小顺序排列
+
+#### 暴力解法
+```javascript
+var sortedSquares = function(nums) {
+    // 暴力解法，先对数组中每一个元素平方，再排序
+    let size=nums.length;
+    for(let i=0;i<size;i++){
+        nums[i]=nums[i]*nums[i];
+    }
+    nums.sort((a,b)=>{
+        return a-b;
+    });
+    return nums;
+};
+```
+
+#### 双指针法
+
+```javascript
+var sortedSquares = function(nums) {
+    // 双指针
+    // let res=[];
+    // 创建结果数组，长度为n
+    const n=nums.length;
+    let res=new Array(n);
+    let left=0;
+    let right=nums.length-1;
+    let index=n-1;
+    while(left<=right){
+        let square_left=nums[left]*nums[left];
+        let square_right=nums[right]*nums[right];
+
+        if(square_left<=square_right){
+            // 只在结果数组中插入一个数值，要处理的数组长度减少1
+            res[index]=square_right;
+            right--;
+        }else if(square_left>square_right){
+            res[index]=square_left;
+            left++;
+    }
+    // 在新数组中插入的顺序按照从后往前，最后面的数字最大
+    index--;
+    }
+    return res;
+};
+```
