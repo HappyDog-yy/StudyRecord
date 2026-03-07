@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>边框广告实现</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            width: 100vw;
+            height: 60vh;
+            text-align: center;
+        }
+        .ad{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 280px;
+            height: 225px;
+            background-color: rgba(245, 248, 248, 0.005);
+            padding:15px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            /* border: 2px solid rgba(0, 0, 0, 0.2); */
+            border-radius: 8px;
+        }
+        .link{
+            background-color: rgb(97, 128, 221);
+            padding: 8px;
+            text-decoration: none;
+            color: white;
+            border-radius: 3px;
+            border-bottom: 5px;
+            font-size: 15px;
+            /* text */
+        }
+        .title{
+            font-weight: bold;
+            font-size: 35px;
+        }
+        .close{
+            position: absolute;
+            /* 它的父级必须设置为relative */
+            top: 3px;
+            right: 10px;
+            color:rgba(0, 0, 0, 1);
+            border: none;
+            background-color: white;
+        }
+        .text{
+            color: #666;
+            margin-top: 8px;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+        .ad-border{
+            position: relative;
+            border-radius: 8px;
+            border:3px solid rgb(105, 230, 27);
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ad">
+        <div class="ad-border">
+            <button class="close" id="colseBtn">x</button>
+            <div class="title">🤩特别优惠</div>
+            <div class="text">今日下单立减50!!!!!!</div>
+            <a href="#" class="link">立即购买</a>
+        </div>
+    </div>
+    <script>
+        const closeBtn=document.getElementById('colseBtn');
+        const ad=document.querySelector('.ad');
+        closeBtn.addEventListener('click',()=>{
+            ad.style.display='none';
+        })
+    </script>
+</body>
+</html>
