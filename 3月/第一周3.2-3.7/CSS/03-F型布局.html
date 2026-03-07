@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F型布局实现</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        .all {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+        
+        .head {
+            display: flex;
+            background-color: rgb(37, 37, 90);
+            color: white;
+            height: 8vh;
+            width: 100vw;
+            padding: 1vh;
+            justify-content: space-between;
+            align-items: center; 
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 30px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 3vw; 
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+
+        .content-container {
+            display: flex;
+            flex: 1; 
+            width: 100%;
+        }
+        
+        .side {
+            background-color: rgb(44, 44, 113);
+            width: 200px;
+            padding: 20px;
+        }
+        
+        .main {
+            background-color: white;
+            flex: 1; 
+            display: flex;
+            flex-direction: column; 
+            padding: 20px;
+        }
+        
+        .main-up {
+            background-color: aquamarine;
+            height: 40%; 
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .main-down {
+            background-color: lightcoral;
+            height: 60%; 
+            width: 100%;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .foot {
+            width: 100vw;
+            height: 9vh;
+            background-color: rgb(37, 37, 90);
+            color: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .placeholder {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .placeholder h2 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="all">
+        <header class="head">
+            <div class="logo">Logo</div>
+            <div class="nav">
+                <div>产品</div>
+                <div>首页</div>
+                <div>关于</div>
+            </div>
+        </header>
+
+        <div class="content-container">
+            <aside class="side">
+                <div class="placeholder">
+                    <h2>侧边栏</h2>
+                    <p>导航菜单</p>
+                    <p>用户信息</p>
+                    <p>设置</p>
+                </div>
+            </aside>
+            
+            <main class="main">
+                <div class="main-up">
+                    <h2>主内容区域 - 上部</h2>
+                </div>
+                <div class="main-down">
+                    <h2>主内容区域 - 下部</h2>
+                </div>
+            </main>
+        </div>
+        
+        <footer class="foot">
+            <div>@ 2026 Flex-F HappyDog</div>
+        </footer>
+    </div>
+</body>
+</html>
