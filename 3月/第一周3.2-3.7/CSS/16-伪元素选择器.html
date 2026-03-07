@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>伪元素选择器</title>
+    <style>
+        *{
+            padding: 10px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .box{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container{
+            background-color: azure;
+            color: darkblue;
+        }
+        .container>div{
+            width: 300px;
+            height: 80px;
+        }
+        /* 伪元素选择器，必须有content内容属性 */
+        /* 可以添加子元素 */
+        /* 伪元素默认为行内元素，可以使用display属性设置为块级元素 */
+        .container::before{
+            content: "first children";
+            display: block;
+            width: 300px;
+            height: 80px;
+            background-color: cornsilk;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="box">
+        <div class="container">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+        </div> 
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            display: flex;
+            justify-content: center;
+            transform: translateY(30px);
+        }
+        .container{
+            display: flex;
+            gap: 30px;
+        }
+        .box{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* width: 100vw;
+            height: 100vh; */
+            border-radius: 50%;
+            /* width: 100px; */
+        }
+        .box img{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+        .first{
+            filter:blur(0);
+        }
+        .second{
+            filter: blur(3px);
+        }
+        .third{
+            filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <img class="first" src="https://ts1.tc.mm.bing.net/th/id/OIP-C.zXsIjjUL8OIFlVOkkdnbfAHaE7?w=240&h=211&c=8&rs=1&qlt=90&r=0&o=6&dpr=1.4&pid=3.1&rm=2" alt="cute哈士奇">
+            <p>不模糊</p>
+        </div>
+        <div class="box">
+            <img class="second" src="https://ts1.tc.mm.bing.net/th/id/OIP-C.zXsIjjUL8OIFlVOkkdnbfAHaE7?w=240&h=211&c=8&rs=1&qlt=90&r=0&o=6&dpr=1.4&pid=3.1&rm=2" alt="cute哈士奇">
+            <p>一般模糊</p>
+        </div>
+        <div class="box">
+            <img class="third" src="https://ts1.tc.mm.bing.net/th/id/OIP-C.zXsIjjUL8OIFlVOkkdnbfAHaE7?w=240&h=211&c=8&rs=1&qlt=90&r=0&o=6&dpr=1.4&pid=3.1&rm=2" alt="cute哈士奇">
+            <p>非常模糊</p>
+        </div>
+    </div>
+</body>
+</html>
