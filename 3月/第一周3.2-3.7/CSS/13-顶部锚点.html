@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>顶部锚点</title>
+    <style>
+
+        /* 实现平滑滚动 */
+        html{
+            scroll-behavior: smooth;
+        }
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            display: flex;
+            /* align-items:center ; */
+            /* justify-content: center; */
+            width: 100vw;
+            position: relative;
+        }
+        .nav{
+            position: fixed;
+            width: 100vw;
+            background-color: rgb(17, 17, 99);
+            color: white;
+            padding: 20px;
+            /* display: block; */
+            display: flex;
+            justify-content: center;
+        }
+        .nav-link{
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            font-size: 20px;
+            text-align: center;
+        }
+        .nav-link:hover{
+            background: #555;
+        }
+        .section{
+            /* top: 80px; */
+            /* position: fixed; */
+            /* display: block; */
+            scroll-margin-top: 80px;
+            padding: 30px;
+            /* transform: translateY(80px); */
+            height: 80vh;
+            width: 100vw;
+            /* border: 2px solid ; */
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.05);
+            margin-bottom: 10px;
+        }
+        .section>p{
+            padding: 10px;
+        }
+        main{
+            margin-top: 80px;
+        }
+        .to-top{
+            text-decoration: none;
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            background-color: rgb(58, 91, 197);
+            bottom: 40px;
+            right: 20px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <div>
+                <a href="#home" class="nav-link">首页</a>
+                <a href="#about" class="nav-link">关于</a>
+                <a href="#service" class="nav-link">服务</a>
+                <a href="#contact" class="nav-link">联系</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="home" class="section">
+            <h2>🏠 首页</h2>
+            <p>这里是首页</p>
+        </section>
+        <section id="about" class="section">
+            <h2>📖 关于我们</h2>
+            <p>这里是关于我们的内容</p>
+        </section>
+        <section id="service" class="section">
+            <h2>🔧 我们的服务</h2>
+            <p>这里是服务</p>
+        </section>
+        <section id="contact" class="section">
+            <h2>📞 联系我们</h2>
+            <p>这里是联系</p>
+        </section>
+    </main>
+    <!-- 添加回到顶部按钮 -->
+     <!-- <button ></button> -->
+    <a href="#home" class="to-top">↑</a>
+</body>
+</html>
