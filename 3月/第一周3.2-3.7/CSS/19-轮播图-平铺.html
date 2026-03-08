@@ -130,6 +130,14 @@
             moveTo(i%4);
             i++;
         }, 3000)
+
+        // 点击小点，切换到对应的图片效果怎么实现
+        dots.forEach((dot,index)=>{
+            dot.addEventListener('click',function(){
+                moveTo(index);
+                i=index;
+            })
+        })
     </script>
     
 </body>
