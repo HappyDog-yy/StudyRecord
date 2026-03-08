@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮播图平铺效果</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body{
+            width: 250px;
+            height: 150px;
+        }
+        .container{
+            overflow: hidden;
+            width: 250px;
+            height: 150px;
+            position: relative;
+        }
+        .box{
+            width: 1000px;
+            /* height: 100%; */
+            margin: 10px auto;
+            /* overflow: hidden; */
+            /* 这跟下面的display=flex是冲突的
+            改为由外层容器container负责超出部分的隐藏 */
+            position: relative;
+            display: flex;
+            transition: 0.5s;
+            /* transform: translateX(-25%); */
+        }
+        .box .item img{
+            width: 250px;
+            height: 150px;
+        }
+        .index{
+            /* 绝对定位，父元素使用相对定位 */
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            /* outline: 1px solid #ccc; */
+        }
+        .index span {
+            width: 15px;
+            height: 15px;
+            border: 2px solid #6666668f;
+            border-radius: 50%;
+            /* left: 50%; */
+            /* transform: translateX(-250px); */
+        }
+        /* 目前选中的底部锚点样式 */
+        .index span.active{
+            background-color: white;
+            border-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- container外层容器，负责隐藏超出部分 -->
+        <div class="box">
+            <!-- box内层滚动条：负责移动 -->
+            <div class="item">
+                <a href="">
+                    <img src="https://sy-1254960240.image.myqcloud.com/box/ingame/images/202603/20260305093023-334240.png" alt="">
+                </a>
+            </div>
+            <div class="item">
+                <a href="">
+                    <img src="https://sy-1254960240.image.myqcloud.com/box/ingame/images/202603/20260303150802-635444.jpg" alt="">
+                </a>
+            </div>
+            <div class="item">
+                <a href="">
+                    <img src="https://sy-1254960240.image.myqcloud.com/box/ingame/images/202603/20260303092602-592106.jpg" alt="">
+                </a>
+            </div>
+            <div class="item">
+                <a href="">
+                    <img src="https://sy-1254960240.image.myqcloud.com/box/ingame/images/202603/20260303150802-635444.jpg" alt="">
+                </a>
+            </div>
+        </div>
+        <!-- 指示器 -->
+        <div class="index">
+            <!-- 其中一个样式比较特别 -->
+            <!-- 有选中的效果 -->
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+    </div>
+    <script>
+        // 首先获取关键性的dom元素
+        let box=document.querySelector(".box");
+        let indexs=document.querySelectorAll(".index");
+        let dots=document.querySelectorAll('.index span');
+        // 移动轮播图到第几个模块
+        function moveTo(index){
+            // 模板字符串实现字符串拼接
+            let move=index*(-25);
+            box.style.transform=`translateX(${move}%)`;
+            // 同时控制指示器的变化
+            // 取出当前选中的指示器
+            var active=document.querySelector('.index span.active');
+            active.classList.remove('active');
+            // 设置将要显示的指示器
+            dots[index].classList.add('active');
+        }
+
+        // 如何实现自动切换
+        // 通过循环实现自动切换
+        // 不能实现，切换速度太快，调用函数的速度也快，来不及切换，因此使用settimeout
+        // 函数，每3s切换一次
+        let i=0;
+        let timer=setInterval(function(){
+            moveTo(i%4);
+            i++;
+        }, 3000)
+    </script>
+    
+</body>
+</html>
