@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精灵图</title>
+    <style>
+        
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            padding: 20px;
+        }
+        .ele{
+            display: inline-block;
+            background-image: url(./img/精灵图.png);
+            background-repeat: no-repeat;
+            width: 100px;
+            height: 100px;
+        }
+        .first{
+            background-position: 0 0;
+        }
+        .second{
+            background-position: -110px 0;
+        }
+        .third{
+            background-position: -220px 0;
+        }
+        .fourth{
+            background-position: 0 -130px;
+        }
+        .item{
+            /* display: grid; */
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            display: inline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>精灵图网格布局</h1>
+        <p>用一张图展示多个表情包</p>
+    </div>
+    <div class="items">
+        <div class="item">
+            <span class="ele first"></span>
+            <span></span>
+        </div>
+        <div class="item">
+            <span class="ele second"></span>
+            <span></span>
+        </div>
+        <div class="item">
+            <span class="ele third"></span>
+            <span></span>
+        </div>
+        <div class="item">
+            <span class="ele fourth"></span>
+            <span></span>
+        </div>
+    </div>
+    
+</body>
+</html>
