@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前端获取后端数据</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        button{
+            display: block;
+            padding: 10px;
+            font-size: 16px;
+            background-color: rgb(113, 180, 225);
+            color: white;
+            margin-bottom:20px ;
+            margin-top: 30px;
+            width: 200px;
+        }
+        button:hover{
+            background-color: rgba(113, 180, 225,0.8);
+        }
+        .result{
+            display: block;
+            width: 400px;
+            height: 150px;
+            font-size: 20px;
+            padding: 20px;
+            background-color: rgb(236, 124, 197);
+            border-radius: 5%;
+        }
+    </style>
+</head>
+<body>
+    <h1>前端读取后端数据</h1>
+    <button onclick="getData()">获取</button>
+    <div id="result" class="result">点击上方按钮获取数据</div>
+    <script>
+        async function getData() {
+            // 像后端发送请求
+            const response = await fetch('http://localhost:3000/api/counter');
+
+            // 解析收到的json格式数据
+            const data = await response.json();
+
+            document.getElementById('result').innerHTML = `
+            <h3>获取成功</h3>
+            <h4>后端计数器：${data.counter}</h4>
+            <h4>后端消息：${data.message}</h4>`
+        }
+    </script>
+</body>
+</html>
