@@ -171,3 +171,47 @@ function maxSlidingWindow(nums: number[], k: number): number[] {
     return res;
 };
 ```
+
+### 3.12翻转链表-双指针
+
+https://leetcode.cn/problems/reverse-linked-list/
+
+```typescript
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+// 1-2-3-4-5-null
+// 变成5-4-3-2-1-null
+function reverseList(head: ListNode | null): ListNode | null {
+    // 当前节点要指向的结点,初始时为最后一个节点要指向的节点
+    let prev:ListNode|null = null;
+    // 当前节点
+    let curr:ListNode|null = head;
+    // 下一个要处理的节点
+    // let next:ListNode = curr.next;
+    // let next:ListNode;
+
+    // 循环结束的条件是当前要处理的节点变为null
+    while(curr!==null){
+        // 保存下一个节点
+        const next:ListNode|null = curr.next;
+        // 翻转当前的指针
+        curr.next = prev;
+        // 移动指针
+        prev = curr;
+        curr = next;
+    }
+    // 参考例子，最后一个要返回的是5，curr现在是null
+    // 也就是它的前一个节点
+    return prev;
+    
+};
+```
