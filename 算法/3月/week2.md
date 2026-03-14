@@ -215,3 +215,52 @@ function reverseList(head: ListNode | null): ListNode | null {
     
 };
 ```
+
+### 3.13交换链表相邻元素
+
+https://leetcode.cn/problems/swap-nodes-in-pairs/
+
+```typescript
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function swapPairs(head: ListNode | null): ListNode | null {
+    // 考虑链表为空的情况
+    if(!head || !head.next){
+        return head;
+    }
+    // 创建虚拟头节点
+    const virtual:ListNode = new ListNode(0,head);
+    // 每次设计三个指针，要交换的两个节点，以及他俩的前面一个
+    // 要交换的两个叫first和second
+    let prev:ListNode = virtual;
+    let first:ListNode = head;
+
+    // 循环：只要first或者second为空就结束
+    // 但如果first为空时，根本拿不到second，只能通过first->next的方式
+    while(first&&first.next){
+        const second:ListNode = first.next;
+        // 交换过程
+        // 先保存第三个节点，以免丢失
+        let nextPair:ListNode|null = second.next;
+        prev.next = second;
+        second.next = first;
+        first.next = nextPair;
+        //现在是prev->second->first->third
+        // prev要指向first，再开始下一轮
+        prev=first;
+        first = nextPair;
+    }
+    return virtual.next;
+
+};
+```
