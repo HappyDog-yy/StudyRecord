@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>切片上传</title>
+    <style>
+        body{ 
+            padding: 20px; 
+        }
+        input, button { 
+            padding: 10px; 
+            margin: 5px; 
+        }
+        .progress { 
+            margin: 10px 0; 
+        }
+    </style>
+</head>
+<body>
+    <h2>分片上传</h2>
+    <input type="file" id="fileInput">
+    <button onclick="upload()">上传</button>
+    
+    <div id="progress" class="progress"></div>
+    <div id="result"></div>
+
+    <script>
+        // 上传函数
+        async function upload() {
+            // 文件上传框
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('请先选择文件');
+                return;
+            }
+            
+            // 每片1MB
+            const CHUNK_SIZE = 1024 * 1024;
+            // 计算切片总数，ceil向上取整
+            const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+            
+            // 唯一标识：否则多用户上传相同文件时会出问题
+            const fileId = file.name + '_' + file.size;
+            
+            // 显示进度
+            updateProgress(`共 ${totalChunks} 片，开始上传...`);
+            
+            for (let i = 0; i < totalChunks; i++) {
+                // 切出一片，第i片
+                // 起始和结束的字节数
+                const start = i * CHUNK_SIZE;
+                // 靠库最后一片可能不是完整的1MB
+                const end = Math.min(start + CHUNK_SIZE, file.size);
+                const chunk = file.slice(start, end);
+                
+                // 创建表单数据
+                const formData = new FormData();
+                formData.append('chunk', chunk);
+                formData.append('fileId', fileId);
+                formData.append('chunkIndex', i);
+                formData.append('totalChunks', totalChunks);
+                formData.append('filename', file.name);
+                
+                // 上传进度
+                updateProgress(`上传第 ${i+1}/${totalChunks} 片...`);
+                
+                // 上传这一片
+                const response = await fetch('http://localhost:3000/upload-chunk', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                // 后端的响应，判断是否上传成功
+                if (!data.success) {
+                    alert(`第 ${i+1} 片上传失败`);
+                    return;
+                }
+            }
+            
+            updateProgress('所有分片上传完成');
+            
+            const mergeResult = await fetch('http://localhost:3000/merge', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fileId: fileId,
+                    filename: file.name,
+                    totalChunks: totalChunks
+                })
+            });
+            
+            const result = await mergeResult.json();
+            
+            if (result.success) {
+                updateResult(`上传成功！<br>文件: ${result.filename}<br>`);
+            } else {
+                updateResult(`合并失败: ${result.error}`);
+            }
+        }
+        
+        // 更新进度
+        function updateProgress(text) {
+            document.getElementById('progress').innerHTML = text;
+        }
+        
+        // 显示结果
+        function updateResult(text) {
+            document.getElementById('result').innerHTML = text;
+        }
+    </script>
+</body>
+</html>
