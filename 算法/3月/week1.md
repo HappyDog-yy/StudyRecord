@@ -108,3 +108,44 @@ var sortedSquares = function(nums) {
     return res;
 };
 ```
+
+### 3.7找到符合条件的最短子数组
+
+https://leetcode.cn/problems/minimum-size-subarray-sum/
+
+#### 暴力解法：leecode无法通过测试用例
+
+```javascript
+var minSubArrayLen = function(target, nums) {
+    // 暴力解法
+    // 思路：两层循环，外层循环控制目标数组的起点
+    // 初始化最小长度为
+    // 内存循环控制目标数组的终点，并计算目标数组的长度
+    // 并更新最小长度，为初始值和当前长度的最小值
+    // 跳出内层循环：
+    // 最后判断：如果最小长度还是初始值，返回0
+    // 否则返回最小长度
+
+    let res=Infinity;
+    const size=nums.length;
+    for(let i=0;i<size;i++){
+        let sum=0;
+        for(let j=i;j<size;j++){
+            sum=sum+nums[j];
+            if(sum>=target){
+                let now_length=j-i+1;
+                if(now_length<res){
+                    res=now_length;
+                }
+                break;
+                // 找到后就跳出内层循环
+            }
+        }
+    }
+    if(res===Infinity){
+        return 0;
+    }else{
+        return res;
+    }
+};
+```
