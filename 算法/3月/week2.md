@@ -264,3 +264,43 @@ function swapPairs(head: ListNode | null): ListNode | null {
 
 };
 ```
+
+### 3.14双指针删除链表倒数第n个元素
+
+https://leetcode.cn/problems/remove-nth-node-from-end-of-list/
+
+```typrscript
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
+    // 设置一个虚拟头节点，让快慢指针刚开始都指向该虚拟头节点
+    let virtual:ListNode|null = new ListNode(0,head);
+    let slow:ListNode|null = virtual;
+    let fast:ListNode|null = virtual;
+
+    // 让快指针先走n+1步，这时候两者之间刚好只查了n
+    // 后面再让两个同步移动，这样快的到null的时候，慢的刚好指向要丢的前一个
+    while(n>=0){
+        fast = fast.next;
+        n--;
+    }
+
+    while(fast){
+        fast = fast.next;
+        slow = slow.next;
+    }
+
+    slow.next = slow.next.next;
+    return virtual.next;  
+};
+```
