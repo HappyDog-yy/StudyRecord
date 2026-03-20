@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨域交互</title>
+    <style>
+        .imgshow{
+            position: fixed;
+            top:40%;
+            left:40%;
+            border: 1px solid rgb(67, 182, 231);
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <input type="text" id="todoInput" placeholder="输入待办事项">
+    <button onclick="addTodo()">添加</button>
+    
+    <ul id="todoList"></ul>
+
+    <div id='imgshow'></div>
+    
+    <script>
+        // 后端
+        const API_URL = 'http://localhost:3000/todos';
+        
+        // 获取后端的todo
+        async function getTodos() {
+            const response = await fetch(API_URL);
+            const data = await response.json();
+            renderTodos(data);
+        }
+        
+        // 添加
+        async function addTodo() {
+            const input = document.getElementById('todoInput');
+            const todo = input.value;
+            
+            if (!todo) return;
+            
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ todo: todo })
+            });
+            
+            input.value = '';
+            getTodos();
+        }
+        
+        // 删除todo
+        async function deleteTodo(id) {
+            await fetch(`${API_URL}/${id}`, {
+                method: 'DELETE'
+            });
+            // 删除元素输出调试
+            console.log("删除元素");
+            getTodos();
+        }
+        
+        // 显示todo列表
+        function renderTodos(todos) {
+            const list = document.getElementById('todoList');
+            list.innerHTML = '';
+            
+            todos.forEach((todos, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    ${todos} 
+                    <button onclick="deleteTodo(${index})">删除</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+        
+        // 页面加载时获取数据
+        window.onload = getTodos;
+
+        // 图片显示
+        src = 'http://localhost:3000/imgs/1.png'
+        const img = document.createElement('img');
+        img.src = src;
+        img.width = 200;
+        document.getElementById('imgshow').appendChild(img);
+
+    </script>
+</body>
+</html>
