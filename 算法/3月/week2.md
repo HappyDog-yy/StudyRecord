@@ -269,7 +269,7 @@ function swapPairs(head: ListNode | null): ListNode | null {
 
 https://leetcode.cn/problems/remove-nth-node-from-end-of-list/
 
-```typrscript
+```typescript
 /**
  * Definition for singly-linked list.
  * class ListNode {
