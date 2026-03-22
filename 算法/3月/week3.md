@@ -135,3 +135,42 @@ function twoSum(nums: number[], target: number): number[] {
 
 };
 ```
+
+### 3.19最长不重复子串
+
+https://leetcode.cn/problems/longest-substring-without-repeating-characters/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+function lengthOfLongestSubstring(s: string): number {
+    let left:number = 0;
+    let right:number = 0;
+    let maxLen:number = 0;
+
+    // 当前窗口的左侧为left，右侧为right，当前窗口的长度为right-left+1
+    // 遍历字串，通过right=【0，size-1】
+    // 若right索引不在当前窗口中，加入窗口，更新maxLen
+    // 如果在当前窗口中，移动left直至遇到
+    // 用于存储每个字符最后一次出现位置的哈希表
+    const charIndexMap = new Map<string, number>();
+    for (let right = 0; right < s.length; right++) {
+        const currentChar = s[right];
+
+        // 如果当前字符之前出现过
+        if (charIndexMap.has(currentChar)) {
+            // 关键：移动左边界，但防止回退
+            // Math.max确保left只向右移动，不会向左回退
+            left = Math.max(left, charIndexMap.get(currentChar)! + 1);
+        }
+
+        // 更新当前字符的最新位置
+        charIndexMap.set(currentChar, right);
+
+        // 计算当前窗口的长度并更新最大值
+        // 窗口长度 = 右边界 - 左边界 + 1
+        const currentLength = right - left + 1;
+        maxLen = Math.max(maxLen, currentLength);
+    }
+
+    return maxLen;
+};
+```
