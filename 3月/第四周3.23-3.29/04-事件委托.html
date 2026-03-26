@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件委托</title>
+</head>
+<body>
+    <ul class="all">
+        <button class="box">1</button>
+        <button class="box">2</button>
+        <button class="box">3</button>
+    </ul>
+    <script>
+// 事件委托，将所有事件都绑定在父元素上，只要子事件点击，父元素直接触发
+        const all = document.querySelector(".all");
+        all.addEventListener('click',function(e){
+            console.log(this);
+            console.log(e.target);
+        })
+    </script>
+</body>
+</html>
