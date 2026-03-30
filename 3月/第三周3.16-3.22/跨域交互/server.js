@@ -51,6 +51,6 @@ app.delete('/todos/:id', (req, res) => {
 app.use('/imgs', express.static('imgs'));
 
 // 启动服务器
-app.listen(3000, () => {
+app.listen(5500, () => {
     console.log('服务器启动'); 
 });
