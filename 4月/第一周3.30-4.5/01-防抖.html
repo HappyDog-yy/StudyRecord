@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+    <style>
+        .input{
+            width: 100px;
+            height: 35px;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="input">
+    <script>
+
+        // 创建一个防抖函数，返回一个函数
+        function debounce(func,delay){
+            // func函数在最后一次触发后的delay秒之后执行
+            let timer = null;
+
+            return function(...args){
+                clearTimeout(timer);
+                // 计数器的回调函数是一个箭头函数，延迟是delay秒
+                timer = setTimeout(()=>{
+                    // 调用这个函数的时候有可能传参，因此使用展开运算符
+                    // aplly是数组传参，call是独立传参
+                    func.apply(this,args)
+                },delay)
+            }
+        }
+
+        // 要添加事件的dom对象
+        let inp = document.getElementById('input');
+
+        // 使用上面的防抖函数
+        // 实际要执行的函数如下：
+        // 该函数会传入什么就输出什么，因此可以将下面的value形参换成a
+        function out(value){
+            console.log(value);
+        }
+
+        // 创建防抖版本的函数,传入的第一个参数是函数，会调用out
+        const debounceOUT = debounce(function(){
+            out(this.value);
+        },1000)
+        // 最后执行的是这个返回函数
+        // 即绑定事件之后的回调函数是它
+
+        inp.addEventListener('input',debounceOUT);
+
+        // // 创建一个计时器并在刚开始置空
+        // let timer = null;
+        // // 为dom对象添加输入事件并监听
+        // // 每次键盘输入内容有变化就会执行对应的函数
+        // inp.oninput = function(){
+        //     // 首先清楚上一个计时器，因为后面要重新设置一个，重复设置多个计时器会导致卡顿
+        //     clearTimeout(timer);
+        //     // 创建新的计时器
+        //     // out();如果直接调用就会频繁输出，即使是无关紧要的
+        //     timer = setTimeout(out,1000)
+        // }
+        // // 即使这样每次内容变化，仍然会创建一个新的计时器，并在1s之后执行，为什么输出次数变少了
+        // // 这是因为在创建一个新的计时器的时候，前面一个计时器被清空了
+    </script>
+</body>
+</html>
