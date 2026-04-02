@@ -128,3 +128,38 @@ function isPalindrome(head: ListNode | null): boolean {
     }return true;
 };
 ```
+
+### 3.判断是否存在环形链表
+
+https://leetcode.cn/problems/linked-list-cycle/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function hasCycle(head: ListNode | null): boolean {
+
+    // 使用快慢指针，如果链表里面有环，就一定能够追上
+    // 因为快指针相当于一个一个地靠近慢指针
+    let fast: ListNode | null = head;
+    let slow: ListNode | null = head;
+
+    while(fast && fast.next){
+        fast = fast.next.next;
+        slow = slow.next;
+        if(fast === slow){
+            return true;
+        }
+    }return false;
+    
+};
+```
