@@ -54,3 +54,77 @@ function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode
     return virtual.next;
 };
 ```
+
+### 2.回文链表
+
+https://leetcode.cn/problems/palindrome-linked-list/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function isPalindrome(head: ListNode | null): boolean {
+    // 翻转链表
+    function reverse(head: ListNode | null): ListNode | null{
+        // 首先处理链表仅有1或0个元素的特殊情况
+        if(head === null || head.next === null){
+            return head;
+        }
+
+        let cur: ListNode | null = head;
+        let prev: ListNode | null = null;
+        let nextNode: ListNode | null = null;
+
+        while(cur){
+            // 先保存下一个节点
+            nextNode = cur.next;
+            // 当前节点指向前一个节点
+            cur.next = prev;
+            prev = cur;
+            cur = nextNode;
+        }
+
+        return prev;
+    }
+
+    // 首先计算链表长度，便于后面奇偶处理
+    let cur: ListNode | null = head;
+    let length:number = 0;
+    while(cur){
+        length++;
+        cur = cur.next;
+    }
+    // 此时cur指向最后，需要重置
+    cur = head;
+
+    // 快慢指针找到链表的中间节点
+    let fast: ListNode | null = head;
+    let slow: ListNode | null = head;
+    while(fast && fast.next && slow){
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    // 翻转后半部分的链表，使用上面定义好的reverse函数
+    // 用于存放后半部分链表的头节点
+    let Hou: ListNode | null  = reverse(slow);
+    let Qian: ListNode | null  = head;
+    // 所有准备工作已经完成，下面比较Qian和Hou两个链表是否完全一样
+    while(Hou&&Qian){
+        if(Qian.val !== Hou.val){
+            return false;
+        }
+        Qian = Qian!.next;
+        Hou = Hou.next;
+    }return true;
+};
+```
