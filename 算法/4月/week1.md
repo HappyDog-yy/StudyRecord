@@ -237,3 +237,24 @@ function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | nul
     return res.next;
 };
 ```
+
+### 5.数组中只出现1次的数字
+
+https://leetcode.cn/problems/single-number/submissions/714989501/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+function singleNumber(nums: number[]): number {
+    // 位运算^异或
+    // 异或的重要特性（两个一样了就是0，不一样的时候是1）
+    // x^x = 0;
+    // x^y = y^x;
+    // x^(y^z) = y^(x^z)
+    // x^0 = x
+
+    // 数组的reduce方法如何使用
+    return nums.reduce((x,y)=>x^y)
+    // 根据交换律，出现两次的数字组合在一起异或都会变成0
+    // 如果0是奇数个，相当于0^x=x
+    // 如果0是偶数个，偶数个的0异或一下还是0，又变成奇数个的0
+};
+```
