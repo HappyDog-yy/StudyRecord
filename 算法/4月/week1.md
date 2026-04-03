@@ -163,3 +163,77 @@ function hasCycle(head: ListNode | null): boolean {
     
 };
 ```
+
+### 4.链表模拟加法竖式脱式
+
+https://leetcode.cn/problems/add-two-numbers/submissions/714754273/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
+    // 结果数组的虚拟头节点，便于最后返回结果
+    let res: ListNode | null = new ListNode(0);
+    let cur: ListNode | null = res;
+    // 需要相加的前面进的数，如前面是8+9，则进1
+    let Jin:number = 0;
+    // 当任意一个为空的时候就可以结束循环了，因为剩余的只需要跟0相加
+    while(l1 &&l2){
+        let x:number = l1?.val;
+        let y:number = l2?.val;
+        let sum:number = x+y+Jin;
+        Jin = Math.floor(sum/10);
+        let thisval = sum%10;
+        let node: ListNode | null = new ListNode(thisval);
+        cur.next = node;
+        cur = cur.next;
+        if(l1){l1 = l1.next;}
+        if(l2){l2 = l2.next}
+    }
+    
+    // 将剩余还有元素的那个拼到结果的最后
+    // 如果l1不为空
+    if(l1){
+        while(l1){
+            let x:number = l1?.val;
+            let sum:number = x+Jin;
+            Jin = Math.floor(sum/10);
+            let thisval:number = sum%10;
+            let node: ListNode | null = new ListNode(thisval);
+            cur.next = node;
+            cur = cur.next;
+            if(l1){l1 = l1.next;}
+        }
+    }
+    if(l2){
+        while(l2){
+            let y:number = l2?.val;
+            let sum:number = y+Jin;
+            Jin = Math.floor(sum/10);
+            let thisval:number = sum%10;
+            let node: ListNode | null = new ListNode(thisval);
+            cur.next = node;
+            cur = cur.next;
+            if(l2){l2 = l2.next}
+        }
+    }
+
+    if(Jin>0){
+        // 处理最后循环结束时仍有需要进位的值的情况
+        // 如8+9，上面的处理仅仅存了各位的7，此时Jin=1
+        cur.next = new ListNode(Jin);
+    }
+
+    return res.next;
+};
+```
