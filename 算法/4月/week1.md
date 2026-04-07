@@ -258,3 +258,25 @@ function singleNumber(nums: number[]): number {
     // 如果0是偶数个，偶数个的0异或一下还是0，又变成奇数个的0
 };
 ```
+
+### 6.多数元素
+
+https://leetcode.cn/problems/majority-element/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+function majorityElement(nums: number[]): number {
+    let res:number = nums[0];
+    let count:number = 0;
+    const len:number=nums.length;
+    for(let i:number = 0;i<len;i++){
+        if(count === 0){
+            res = nums[i];
+        }
+        if(nums[i]=== res){
+            count++;
+        }else{count--;}
+        
+    }
+    return res;
+};
+```
