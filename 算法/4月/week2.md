@@ -137,3 +137,79 @@ function preorderTraversal(root: TreeNode | null): number[] {
     
 };
 ```
+
+### 4.二叉树的中序遍历：左-->根-->右
+
+https://leetcode.cn/problems/binary-tree-inorder-traversal/submissions/716973220/?envType=study-plan-v2&envId=top-100-liked
+
+#### 4.1递归实现
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function inorderTraversal(root: TreeNode | null): number[] {
+    // 中序遍历的遍历顺序：左-->根-->右
+    let res:number[] = [];
+
+    // 定义访问其中一个节点的函数
+    function through(node: TreeNode | null):void{
+        // 首先处理该节点直接为空的情况
+        if(!node){
+            return ;
+        }else{
+            if(node.left){
+                through(node.left);
+            }
+            res.push(node.val);
+            if(node.right){
+                through(node.right);
+            }
+        }
+    }
+
+    through(root);
+
+    return res;
+    
+};
+```
+
+#### 4.2循环实现
+
+```ts
+function inorderTraversal(root: TreeNode | null): number[] {
+    // 中序遍历的遍历顺序：左-->根-->右
+    let res:number[] = [];
+    let stack: (TreeNode| null)[]= []; // 辅助栈
+    let cur: TreeNode | null = root;
+
+    // 先遍历左节点，将其压入栈中，直至遍历完左
+    // 先将栈里的元素弹出，让cur指向现在的这个元素，放到结果里面
+    while(stack.length||cur){
+        if(cur){
+            // 该节点先入栈，它的左节点在下一轮入栈
+            // 1是此时不确定其左节点是否存在
+            // 2是如果左节点先入栈，就会后出栈，导致不满足中序遍历
+            stack.push(cur);
+            cur = cur.left;
+        }else{
+            cur = stack.pop();
+            res.push(cur.val);
+            cur = cur.right;
+        }
+    }
+    return res;
+};
+```
