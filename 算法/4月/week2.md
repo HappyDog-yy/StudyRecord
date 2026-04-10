@@ -90,3 +90,50 @@ class MinStack {
 // 第一个数组是要执行的方法名，第二个数组是传递的参数
 // 传递的参数数组每一个元素又是一个数组，最后一个对应就是，执行getMin()的执行结果
 ```
+
+### 3.二叉树的前序遍历
+
+https://leetcode.cn/problems/binary-tree-preorder-traversal/submissions/716967024/
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function preorderTraversal(root: TreeNode | null): number[] {
+    // 将数据存到对应的数据结构中
+    // 前序遍历算法即深度优先算法
+
+    let res:number[] = [];
+    
+    // 遍历一个节点的左节点和右节点的函数
+    function through(node:TreeNode | null):null{
+        // 先处理节点为空的情况
+        if(!node){
+            return;
+        }else{
+            res.push(node.val);
+            if(node.left){
+                through(node.left);
+            }
+            if(node.right){
+                through(node.right);
+            }
+        }
+    }
+
+    through(root);
+    return res;
+    
+};
+```
