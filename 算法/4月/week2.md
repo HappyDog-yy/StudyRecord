@@ -213,3 +213,52 @@ function inorderTraversal(root: TreeNode | null): number[] {
     return res;
 };
 ```
+
+### 5.层序遍历二叉树
+
+https://leetcode.cn/problems/binary-tree-level-order-traversal/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function levelOrder(root: TreeNode | null): number[][] {
+    if(root === null)return [];
+
+    const res:number[][]=[];
+    // 将根节点首先入队
+    const queue:TreeNode[] = [root];
+
+    while(queue.length>0){
+        // 当前层数位队列的长度
+        const level = queue.length;
+        let curLevel:number[] = [];
+
+        // level就代表当前层的根节点个数
+        // 遍历这一层的每一个根节点
+        // 虽然在循环的过程中，队列的长度回随之增加，但是在循环开始之前
+        // 队列的长度已经被存储在level变量里
+        for(let i=0;i<level;i++){
+            // 取出队首元素，即上面放进来的根节点
+            // 也可以理解为处于这一层的根节点
+            let node = queue.shift();
+            curLevel.push(node.val);
+            if(node.left) queue.push(node.left);
+            if(node.right)queue.push(node.right);
+        }
+        res.push(curLevel);
+    }
+    return res;
+};
+```
