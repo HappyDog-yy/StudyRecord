@@ -262,3 +262,51 @@ function levelOrder(root: TreeNode | null): number[][] {
     return res;
 };
 ```
+
+### 6.对称二叉树的判断
+
+https://leetcode.cn/problems/symmetric-tree/submissions/717534174/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function isSymmetric(root: TreeNode | null): boolean {
+    // 如果根节点为空，直接返回true
+    if(!root){return true;}
+
+    // 根节点不为空的情况下，比较左右子节点是否呈镜像对称
+    return Mirror(root.left,root.right);
+
+    // 定义是否呈镜像对称的函数
+    function Mirror(left:TreeNode | null,right:TreeNode | null):boolean{
+        // 如果左右节点都为空，返回true
+        if(!(left||right)){return true;}
+
+        // 如果仅其中一个为空，返回false
+        if( ((!left)&&(right)) || ((!right)&&(left))){return false;}
+
+        // 如果两个节点的值不相等，直接返回false
+        if(left.val !== right.val){return false;}
+
+        // 两个值相等的情况下，判断是否呈镜像对称
+        if(left.val === right.val){
+            return Mirror(left.left,right.right)&&Mirror(left.right,right.left);
+        }
+        
+    }
+
+    
+};
+```
