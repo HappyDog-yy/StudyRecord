@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- 引入react核心库 -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <!-- 依赖核心库，将核心的功能与页面结合 -->
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- 引入babel，用于将jsx语法转换为js语法 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script>
+        // 该函数的作用是创建一个react元素，接受三个参数
+        // 1.元素的类型，字符串表示原生标签，函数表示组件
+        // 2.元素的属性，null表示没有属性   
+        // 3.元素的子节点，可以是一个或多个字符串或react元素
+        // 但创建的不是真正的dom，而是一个Js对象
+        var h1 = React.createElement('h1', null, 'hello world');
+
+        // 用于渲染的函数，接受两个参数
+        // 要渲染的元素和要将元素渲染到哪个容器中
+        ReactDOM.render(h1,
+            document.getElementById('root')
+        );
+        // 该函数可以把虚拟的DOM对象h1变成真实的DOM元素，并且把它放到页面上id为root的容器中
+    </script>
+
+    <script type="text/babel">
+        // 相当于告诉浏览器：这里的的代码是jsx语法，你不用管了，我会用babel进行转换
+        // 其实最后jsx也会被转成js语法，和上面一样的效果
+        // 不过是语法糖，写起来更方便，更直观
+        // 使用jsx语法创建react元素
+        var h1 = <h1>hello world</h1>;
+
+        // 渲染jsx元素
+        ReactDOM.render(h1, document.getElementById('root'));
+    </script>
+
+    <!-- 后续使用脚手架，也可以实现同样的效果，但是使用脚手架会更加清晰
+     更容易实现模块化 -->
+</body>
+</html>
