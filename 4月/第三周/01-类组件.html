@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>类组件</title>
+    <style>
+        #root{
+            width: 200px;
+            height: 200px;
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- 引入react核心库 -->
+     <!-- react17不支持空标签fragment的语法，用了会导致页面什么也不显示 -->
+     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    
+     <!-- 使用了JSX代码，必须引入babel将其编译成js，否则浏览器不识别 -->
+     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+     <!-- 创建一个类组件并使用 -->
+    <script type="text/babel">
+
+        // 创建的类组件时必须继承自component类的
+        class Counter extends React.Component {
+            constructor(props){
+                // 必须首先调用父类的构造方法
+                super(props);
+                // 初始化状态
+                this.state={count:0,msg:'hello world'}
+            }
+
+            // 声明周期方法
+            componentDidMount(){
+                console.log('组件已经挂载到页面上了');
+            }
+
+            // 计数器增加1
+            // 使用箭头函数自动绑定this
+            // 或者使用普通函数，需要在构造函数中手动绑定this
+            // 手动绑定this的方式：this.handleClick=this.handleClick.bind(this);
+            handleClick=()=>{
+                this.setState({count:this.state.count+1});
+            }
+            
+            // 组件必须有一个render方法，render方法必须返回一个react元素
+            render() {
+                return (<div>
+                    <h1>计数器：{this.state.count}</h1>
+                    <button onClick = {this.handleClick} 
+                    style={{backgroundColor:"lightblue"}}
+                    >点击按钮，计数器加1</button>
+                </div>);
+            }
+        }
+
+        // 使用组件
+        // 必须挂载到页面上一个容器中，才能显示出来
+        ReactDOM.render(<Counter />, document.getElementById('root'));
+    </script>
+</body>
+</html>
