@@ -21,15 +21,21 @@
     <ul id="todoList"></ul>
 
     <div id='imgshow'></div>
+    <img src="http://localhost:3000/imgs/1.png" alt="示例图片1" width="200">
     
     <script>
         // 后端
-        const API_URL = 'http://localhost:3000/todos';
+        const API_URL = 'http://localhost:5500/todos';
         
-        // 获取后端的todo
+        // 获取后端的todo，异步函数，等待fetch请求完成后再继续执行
         async function getTodos() {
+            // 等待fetch请求完成，获取响应对象，包括响应头和响应体
+            // fetch默认是使用GET方法发送请求，向指定的URL获取数据，因此此处没有设置method选项
             const response = await fetch(API_URL);
+            // response.json()是一个异步操作，等待解析完成后再继续执行，
+            // 得到的数据是一个JavaScript对象或数组，取决于后端返回的数据结构
             const data = await response.json();
+            // 用于显示todo列表
             renderTodos(data);
         }
         
@@ -44,6 +50,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ todo: todo })
+                // JSON.stringify把JavaScript对象转换成JSON字符串，发送给后端，后端可以解析成对象或数组
             });
             
             input.value = '';
