@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨域交互</title>
+    <style>
+        .imgshow{
+            position: fixed;
+            top:40%;
+            left:40%;
+            border: 1px solid rgb(67, 182, 231);
+        }
+        .hidden {
+            display: none;
+        }
+        .login-container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            padding: 8px 15px;
+            margin-right: 10px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginSection" class="login-container">
+        <h2>登录/注册</h2>
+        <div class="input-group">
+            <input type="text" id="username" placeholder="用户名">
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="密码">
+        </div>
+        <div id="loginError" class="error"></div>
+        <div>
+            <button onclick="login()">登录</button>
+            <button onclick="register()">注册</button>
+        </div>
+    </div>
+    <!-- 登录成功后显示的内容 -->
+    <div id="mainSection" class="hidden">
+        <h1>Todo List</h1>
+        <button onclick="logout()" style="float: right; margin: 10px;">退出登录</button>
+        <div>欢迎, <span id="currentUser"></span>!</div>
+        
+        <input type="text" id="todoInput" placeholder="输入待办事项">
+        <button onclick="addTodo()">添加</button>
+        
+        <ul id="todoList"></ul>
+
+        <div id='imgshow'></div>
+        <img src="http://localhost:3000/imgs/1.png" alt="示例图片1" width="200">
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:3000';
+        
+        // 登录状态和用户名
+        let isLoggedIn = false;
+        let currentUsername = '';
+        
+        // 检查是否登录
+        function checkLoginStatus() {
+            const token = localStorage.getItem('token');
+            // 上面的作用是检查本地存储中是否有token，如果有，就认为用户已经登录了
+            if (token) {
+                // 代表已经登录了，直接显示主界面
+                isLoggedIn = true;
+                currentUsername = localStorage.getItem('username') || '';
+                showMainSection();
+            } else {
+                showLoginSection();
+            }
+        }
+        
+        // 显示登录界面
+        function showLoginSection() {
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('mainSection').classList.add('hidden');
+        }
+        
+        // 显示主界面
+        function showMainSection() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('mainSection').classList.remove('hidden');
+            // 把输入框里的作为用户名
+            document.getElementById('currentUser').textContent = currentUsername;
+            
+            // 获取待办事项并显示图片
+            getTodos();
+            displayImage();
+        }
+        
+        // 登录，异步事件
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            // 如果右空的，提示用户
+            if (!username || !password) {
+                errorDiv.textContent = '用户名和密码不能为空';
+                return;
+            }
+            
+            try {
+                // 发请求，并把用户名和密码放在请求体里，传递给后端让他们存储
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                // 响应体，其中有个success属性，是个布尔值
+                const data = await response.json();
+                
+                if (data.success) {
+                    localStorage.setItem('token', data.token || 'dummy-token');
+                    localStorage.setItem('username', username);
+                    // 上面两句的作用是把token和用户名存储在本地存储中，这样用户刷新页面后仍然可以保持登录状态
+                    // dummy-token是一个占位符，实际应用中应该使用后端返回的真实token
+                    isLoggedIn = true;
+                    currentUsername = username;
+                    
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                    errorDiv.textContent = '';
+                    
+                    showMainSection();
+                } else {
+                    errorDiv.textContent = data.error || '登录失败';
+                }
+            } catch (error) {
+                errorDiv.textContent = '网络错误，请检查服务器';
+            }
+        }
+        
+        // 注册事件的处理
+        async function register() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (!username || !password) {
+                errorDiv.textContent = '用户名和密码不能为空';
+                return;
+            }
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    errorDiv.textContent = '注册成功！请登录';
+                    document.getElementById('password').value = '';
+                } else {
+                    errorDiv.textContent = data.error || '注册失败';
+                }
+        }
+        
+        // 退出登录，之后显示登录页面
+        function logout() {
+            // 本地存储之前存了token，是为了用户刷新页面的时候也不用重新登录
+            // 退出的时候要删掉本地存储的token和用户名
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            isLoggedIn = false;
+            currentUsername = '';
+            showLoginSection();
+        }
+        
+        // 获取后端的todo，只有登录状态的时候才能获取
+        async function getTodos() {
+            if (!isLoggedIn) return;
+            try {
+                const response = await fetch(`${API_URL}/todos`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        // 该请求头的作用是把token放在请求头里，告诉后端这是一个已经登录的用户，
+                        // 后端可以根据这个token来验证用户的身份，并返回对应的待办事项列表
+                    }
+                });
+                
+                if (response.status === 401) {
+                    logout();
+                    return;
+                }
+                
+                const data = await response.json();
+                renderTodos(data);
+            } catch (error) {
+                console.error('获取待办事项失败:', error);
+            }
+        }
+        
+        // 添加todo事项
+        async function addTodo() {
+            if (!isLoggedIn) return;
+            
+            const input = document.getElementById('todoInput');
+            const todo = input.value;
+            
+            if (!todo) return;
+            
+                await fetch(`${API_URL}/todos`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({ todo: todo })
+                });
+                
+                input.value = '';
+                getTodos();
+        }
+        
+        // 删除todo
+        async function deleteTodo(id) {
+            if (!isLoggedIn) return;
+            
+                await fetch(`${API_URL}/todos/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        // Authorization的意思是授权，告诉后端这是一个已经登录的用户，
+                        // 后端可以根据这个token来验证用户的身份，并允许他们删除对应的待办事项
+                    }
+                });
+                
+                console.log("删除元素");
+                getTodos();
+        }
+        
+        // 显示todo列表
+        function renderTodos(todos) {
+            const list = document.getElementById('todoList');
+            list.innerHTML = '';
+            
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    ${todo} 
+                    <button onclick="deleteTodo(${index})">删除</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+        
+        // 显示图片
+        function displayImage() {
+            const src = 'http://localhost:3000/imgs/1.jpg';
+            const container = document.getElementById('imgshow');
+            container.innerHTML = '';
+            
+            const img = document.createElement('img');
+            img.src = src;
+            img.width = 200;
+            img.alt = '图片';
+            container.appendChild(img);
+        }
+        
+        // 页面加载时检查登录状态
+        window.onload = function() {
+            checkLoginStatus();
+        };
+
+    </script>
+</body>
+</html>
