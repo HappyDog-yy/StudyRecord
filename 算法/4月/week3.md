@@ -86,3 +86,47 @@ function sortedArrayToBST(nums: number[]): TreeNode | null {
     return createTree(nums,0,nums.length-1);
 };
 ```
+
+### 检查是否符合二叉搜索树的定义
+
+https://leetcode.cn/problems/validate-binary-search-tree/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function isValidBST(node: TreeNode | null): boolean {
+    // 设置前一个节点的值，初始化为null
+    let prevVal:number|null = null;
+
+    // 中序遍历数组
+    // 因为二叉搜索树的条件就是中序遍历有序
+    function inorder(node: TreeNode | null):boolean{
+        // 节点为空-》返回true
+        if(!node){return true;}
+
+        // 下面按照左根右的顺序
+        if(!inorder(node.left)) return false;
+
+    // 接着是当前节点，和它的左边哪个节点比较
+    // 为什么没有比较右边的节点呢？因为右边的节点在后面比较过了
+        if(prevVal !== null && node.val<=prevVal){
+            return false;
+        }
+        prevVal = node.val;
+        return inorder(node.right);
+    }
+    return inorder(node);
+};
+```
