@@ -25,7 +25,8 @@
     
     <script>
         // 后端
-        const API_URL = 'http://localhost:5500/todos';
+        const API_URL = 'http://localhost:3000/todos';
+        alert("获取数据成功");
         
         // 获取后端的todo，异步函数，等待fetch请求完成后再继续执行
         async function getTodos() {
@@ -37,6 +38,7 @@
             const data = await response.json();
             // 用于显示todo列表
             renderTodos(data);
+            
         }
         
         // 添加
@@ -80,6 +82,7 @@
                 `;
                 list.appendChild(li);
             });
+            
         }
         
         // 页面加载时获取数据
