@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>类组件</title>
+    <style>
+        #root{
+            width: 200px;
+            height: 200px;
+            background-color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 引入react核心库 -->
+     <!-- react17不支持空标签fragment的语法，用了会导致页面什么也不显示 -->
+     <!-- <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> -->
+     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+     <!-- 使用了JSX代码，必须引入babel将其编译成js，否则浏览器不识别 -->
+     <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+       -->
+     <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+      <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+     <!-- 创建一个类组件并使用 -->
+    <div id="root"></div>
+    <script type="text/babel">
+        // 计数器的实现
+        // import {usestate} from 'react';
+        // import ReactDOM from 'react-dom';
+        console.log("111111111");
+        // debugger;
+        console.log(React,ReactDOM,React.useState);
+        // debugger;
+        function Counter(){
+            const [count,setCount] = React.useState(0);
+            // 计数器增加
+            function handleUp(){
+                setCount(c=>c+1);
+            }
+            // 计数器减少
+            function handleDown(){
+                setCount(c=>c-1);
+            }
+            return (<div>
+                <p>计数: {count}</p>
+                <button onClick={handleUp}>增加</button>
+                <button onClick={handleDown}>减少</button>
+            </div>);
+        
+        }
+
+        // 挂载到根组件上
+        // 创建根组件
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(
+            <Counter />
+        );
+    </script>
+</body>
+</html>
