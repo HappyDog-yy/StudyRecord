@@ -87,7 +87,7 @@ function sortedArrayToBST(nums: number[]): TreeNode | null {
 };
 ```
 
-### 检查是否符合二叉搜索树的定义
+### 3.检查是否符合二叉搜索树的定义
 
 https://leetcode.cn/problems/validate-binary-search-tree/?envType=study-plan-v2&envId=top-100-liked
 
@@ -128,5 +128,46 @@ function isValidBST(node: TreeNode | null): boolean {
         return inorder(node.right);
     }
     return inorder(node);
+};
+```
+
+### 4.二叉树的最大深度
+
+https://leetcode.cn/problems/maximum-depth-of-binary-tree/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function maxDepth(root: TreeNode | null): number {
+    if (root === null) return 0;
+    // 使用队列，首先将根节点入栈
+    const queue:(TreeNode | null)[] = [root];
+    let depth:number = 0;
+    while (queue.length) {
+        // 用于记录当前层的所处的深度
+        const levelSize:number = queue.length;
+        for (let i:number = 0; i < levelSize; i++) {
+            // 将当前层的所有子节点全部加入到队列中
+            // 当for循环结束，队列中只剩下子节点，此时深度加1
+            const node:TreeNode | null = queue.shift();
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+        depth++;
+    }
+    return depth;
+    
 };
 ```
