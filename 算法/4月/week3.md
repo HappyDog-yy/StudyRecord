@@ -171,3 +171,44 @@ function maxDepth(root: TreeNode | null): number {
     
 };
 ```
+
+### 5.二叉树的最大直径
+
+https://leetcode.cn/problems/diameter-of-binary-tree/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function diameterOfBinaryTree(root: TreeNode | null): number {
+    // 对于每一个节点，经过该节点的最长路径等于左子树的深度和右子树的深度之和
+    let maxNum:number = 0;
+
+    // 计算某一个节点的左右子树深度之和的算法
+    function calMaxDepth(node: TreeNode | null):number{
+        if(!node) return 0;
+        // 左子树和右子树递归计算最大深度
+        const left:number = calMaxDepth(node.left);
+        const right:number = calMaxDepth(node.right);
+
+        maxNum = Math.max(left+right,maxNum);
+
+        return Math.max(left,right)+1;
+    }
+
+    calMaxDepth(root);
+    return maxNum;
+    
+};
+```
