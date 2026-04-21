@@ -1,0 +1,76 @@
+{
+    // 1.编译器目标配置
+    "compilerOptions": {
+    "target": "es2017",
+    // 将代码编辑成ES2017标准，支持异步async、await
+    "lib": ["dom", "dom.iterable", "esnext"],
+    // 使用的库：dom、dom.iterable和esnext（最新的es特性）
+    "allowJs": true,
+    // 允许在项目中包含js文件，即可以同时包含js和ts文件
+    "skipLibCheck": true,
+    // 跳过库文件的类型检查，加快编译速度
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    // 允许合成默认导入，即使模块没有默认导出
+    "strict": true,//开启所有严格检查类型
+    "forceConsistentCasingInFileNames": true,
+    // 强制文件名一致的大小写，防止在不同操作系统上出现问题
+    
+    // 2.模块系统相关配置
+    "module": "esnext",
+    // 使用ES模块系统，支持摇树优化
+    // 摇树优化是一种编译时优化技术，可以移除未使用的代码，
+    // 减小最终输出的文件大小
+    "moduleResolution": "node",
+    // 使用node.js的模块解析策略，从node_modules目录中查找模块
+    "resolveJsonModule": true,
+    // 允许导入JSON文件作为模块,如：import data from './data.json'
+    "isolatedModules": true,
+    // 确保每个文件可以单独编译，
+    // 单独编译是指每个文件都可以独立编译成JavaScript，而不依赖于其他文件的类型信息
+    // 这对于使用Babel等工具进行编译非常重要，
+    // 因为它们通常是文件并行编译的
+    "noEmit": true,
+    "jsx": "react-jsx",
+    // react17+的jsx转换方式，自动导入React，
+    // 无需手动引入React
+
+    // 3.路径别名配置
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+    //   对应的路径是src/components/*，
+    // 可以使用@components/xxx来引用src/components/xxx
+      "@utils/*": ["utils/*"]
+    },
+
+    // 4.严格类型检查选项
+
+    "strictNullChecks": true,
+    // 启用严格的null检查，防止null和undefined的错误使用
+    "noImplicitAny": true,
+    // 禁止隐式的any类型，要求显式声明类型
+    "noImplicitThis": true,
+    // 禁止隐式的this类型，要求显式声明this的类型
+    "alwaysStrict": true,
+    // 总是使用严格模式
+    "noUnusedLocals": true,
+    // 定义了但是没有使用的局部变量是不被允许的
+    // 禁止未使用的局部变量，帮助发现冗余代码或者潜在的错误
+    "noUnusedParameters": true,
+    // 禁止未使用的参数
+    "noImplicitReturns": true,
+    // 禁止返回值类型错误或者返回值类型与定义的返回值类型不一致
+    "noFallthroughCasesInSwitch": true
+    // 禁止switch语句中case的贯穿，防止遗漏break导致的错误
+    // case的贯穿是指在switch语句中，如果没有在case块的末尾使用break语句，
+    // 则会继续执行下一个case块的代码
+    // 直到遇到break或者switch语句结束为止
+  },
+
+//   文件排除/包含：不配置时默认包含所有的ts或者tsx后缀的文件
+  "include": ["src"],
+//   仅仅编译src目录下的文件，
+// 排除node_modules和build目录下的文件
+  "exclude": ["node_modules", "build"]
+}
