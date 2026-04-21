@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reducer复杂状态的集中管理</title>
+</head>
+<body>
+    <!-- 挂载点，也是根组件 -->
+    <div id="root"></div>
+
+    <!-- 1. 引入 React 核心库 -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <!-- 2. 引入 ReactDOM 核心库 -->
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- 3. 引入 Babel，用于编译 JSX -->
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        // CDN方式不需要import语句
+
+        // 初始状态，设置state为0
+        const initState={count:0};
+
+        // reducer函数，根据不同的action.type来更新状态
+        // 接受两个参数，一个是当前状态state,另一个是action对象，包含type和payload属性
+        // action对象的必须包含type属性，表示要执行的操作类型，payload属性表示要传递的数据
+        // 除了type属性之外，其他的属性都不是必须的
+        function counterReducer(state,action){
+            switch(action.type){
+                case 'increment':
+                    return {count:state.count+1};
+                case 'decrement':
+                    return {count:state.count-1};
+                case 'reset':
+                    return {count:0};
+                case 'set':
+                    return {count:action.payload};
+                default:
+                    return state;
+            }
+        }
+
+        // 在组件中使用userREducer管理状态
+        function Counter(){
+            // 其中最后的初始化函数是可选项，不是必须的
+            // dispatch是向reducer函数传递action.type的函数
+            const [state,dispatch] = React.useReducer(counterReducer,initState);
+
+            return(<div>
+                <h1>Count:{state.count}</ h1>
+                <button onClick = {()=>dispatch({type:'increment'})}>增加</button>
+                <button onClick = {()=>dispatch({type:'decrement'})}>减少</button>
+                <button onClick = {()=>dispatch({type:'reset'})}>重置</button>
+                <button onClick = {()=>dispatch({type:'set',payload:100})}>设置为100</button>
+                </div>);
+        }
+
+        // 获取挂载点
+        const container = document.getElementById('root');
+
+        // 创建根
+        const root = ReactDOM.createRoot(container);
+
+        // 渲染根组件
+        root.render(<Counter />);
+        console.log('组件渲染了');
+    </script>
+
+    <!-- 后续使用脚手架，也可以实现同样的效果，但是使用脚手架会更加清晰
+     更容易实现模块化 -->
+</body>
+</html>
