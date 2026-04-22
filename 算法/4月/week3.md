@@ -212,3 +212,26 @@ function diameterOfBinaryTree(root: TreeNode | null): number {
     
 };
 ```
+
+### 6.数组移动k个元素
+
+https://leetcode.cn/problems/rotate-array/submissions/720348903/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+/**
+ Do not return anything, modify nums in-place instead.
+ */
+function rotate(nums: number[], k: number): void {
+    // 如果num=4,k=2
+    // 先复制数组，
+    // 改动后的数组的i+K的位置，是原数组的i元素
+    const len:number = nums.length;
+
+    let nums_copy:number[] = [...nums];
+
+    for(let i:number = 0;i<len;i++){
+        nums[(i+k)%len] = nums_copy[i];
+    }
+    
+};
+```
