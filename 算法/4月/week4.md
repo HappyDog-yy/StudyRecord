@@ -83,3 +83,66 @@ function maxSubArray(nums: number[]): number {
     
 };
 ```
+
+### 3.合并无重复的区间（数组）
+
+https://leetcode.cn/problems/merge-intervals/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+function merge(intervals: number[][]): number[][] {
+    const len:number = intervals.length;
+
+    // 首先对于原数组的区间按照区间起点进行排序
+    for(let i:number=0;i<len;i++){
+        for(let j:number=i+1;j<len;j++){
+            if(intervals[i][0]>intervals[j][0]){
+                let temp:number[] = [...intervals[i]];
+                intervals[i] = intervals[j];
+                intervals[j] = temp;
+            }
+        }
+    }
+
+    // 检查两个数组是否重合的数组
+    // 不重合返回true，否则返回false
+    function check(nums1:number[],nums2:number[]):boolean{
+        const len1:number = nums1.length;
+        const len2:number = nums2.length;
+
+        if(len1===0 || len2===0)return true;
+        // 保证数组1的左端点更小
+        if(nums1[0]>nums2[0]){
+            let temp:number[] = [...nums1];
+            nums1 = [...nums2];
+            nums2 = [...temp];
+        }
+
+        if(nums1[len1-1]<nums2[0])return true;
+        return false;
+    }
+
+    // 对于原数组中的每两个元素之间进行对比
+    let res:number[][] = [];
+    let cur:number[] = intervals[0];
+    // 下面的循环只需要进行一轮即可完成比较
+    for(let j:number = 1;j<len;j++){
+        // 让当前数组和下一个数组进行比较
+        let checkres = check(cur,intervals[j]);
+        // 如果返回结果为false，代表有重合的部分
+        // 重合则修改cur数组的起点和终点
+        if(!checkres){
+            cur[0] = intervals[j][0]>cur[0]?cur[0]:intervals[j][0];
+            cur[1] = intervals[j][1]>cur[1]?intervals[j][1]:cur[1];
+        }else{
+            // 不重合的情况，将当前的cur加入结果数组
+            res.push(cur);
+            cur = intervals[j];
+        }
+    }
+
+    //最后将cur放入res结果中
+    res.push(cur);
+    return res;
+};
+```
+
