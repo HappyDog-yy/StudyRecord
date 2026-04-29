@@ -150,6 +150,7 @@ function merge(intervals: number[][]): number[][] {
 
 https://leetcode.cn/problems/combinations/submissions/721878702/
 
+#### 4.1未剪枝版本
 ```ts
 function combine(n: number, k: number): number[][] {
     // 使用回溯算法
@@ -185,5 +186,46 @@ function combine(n: number, k: number): number[][] {
     backTracking(n,k,1);
     return res;
  
+};
+```
+
+#### 4.2剪枝版本
+```ts
+function combine(n: number, k: number): number[][] {
+    // 使用回溯算法
+    // 有递归就有回溯
+    // 组合问题，使用for循环要嵌套k层，k是不确定的，没办法解决
+
+    let res:number[][]=[];
+    // 结果数组，二维数组
+    let path:number[] = [];
+    // 一维数组，最后会将符合的path数组push到最终结果中
+
+    function backTracking(n:number,k:number,startIndex:number){
+        // 回溯算法三部曲
+        // 递归函数的参数和返回值
+        // 确定递归终止的条件：到达叶子节点，即path.length===k
+        // 单层递归的逻辑是什么
+
+        if(path.length === k){
+            // 符合终止条件时，先将其加入结果数组，再返回结果
+            res.push(path.slice());
+            return;
+        }
+        // 如何剪枝？如n=4，k=3，那么i至多从2开始，如果从3开始，只有3 4，是不可能满足元素的个数的
+        // 如果n=3，k=3，那么i至多从1开始，后面的都不用看
+        // 如果组合中一共要有k个数，现在已经有path.length个数，还需要k-path.length
+        // 那么起始的位置至多是n-(k-path.length)+1
+        for(let i=startIndex;i<=n-(k-path.length)+1;i++){
+            path.push(i);
+            // i=1的时候，此时数组长度为1
+            // 可以进一次循环，把2加进去，此时长度为2，直接返回，并且已经把【1，2】加入结果数组
+            // 这时候把2弹出，
+            backTracking(n,k,i+1);
+            path.pop();
+        }
+    }
+    backTracking(n,k,1);
+    return res;
 };
 ```
