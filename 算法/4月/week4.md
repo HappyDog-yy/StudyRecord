@@ -146,3 +146,44 @@ function merge(intervals: number[][]): number[][] {
 };
 ```
 
+### 4.回溯法解决组合问题
+
+https://leetcode.cn/problems/combinations/submissions/721878702/
+
+```ts
+function combine(n: number, k: number): number[][] {
+    // 使用回溯算法
+    // 有递归就有回溯
+    // 组合问题，使用for循环要嵌套k层，k是不确定的，没办法解决
+
+    let res:number[][]=[];
+    // 结果数组，二维数组
+    let path:number[] = [];
+    // 一维数组，最后会将符合的path数组push到最终结果中
+
+    function backTracking(n:number,k:number,startIndex:number){
+        // 回溯算法三部曲
+        // 递归函数的参数和返回值
+        // 确定递归终止的条件：到达叶子节点，即path.length===k
+        // 单层递归的逻辑是什么
+
+        if(path.length === k){
+            // 符合终止条件时，先将其加入结果数组，再返回结果
+            res.push(path.slice());
+            return;
+        }
+        for(let i=startIndex;i<=n;i++){
+            path.push(i);
+            // i=1的时候，此时数组长度为1
+            // 可以进一次循环，把2加进去，此时长度为2，直接返回，并且已经把【1，2】加入结果数组
+            // 这时候把2弹出，
+            backTracking(n,k,i+1);
+            path.pop();
+        }
+    }
+
+    backTracking(n,k,1);
+    return res;
+ 
+};
+```
