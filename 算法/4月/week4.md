@@ -229,3 +229,97 @@ function combine(n: number, k: number): number[][] {
     return res;
 };
 ```
+
+### 5.组合总和
+
+https://leetcode.cn/problems/combination-sum-iii/
+
+```ts
+function combinationSum3(k: number, n: number): number[][] {
+    // 此题如果要使用for循环的话，就是k层for循环，无法实现
+    // 使用回溯算法
+    // 存放结果数组
+    let res:number[][]=[];
+    let path:number[]=[];
+
+    // 回溯三部曲
+    // 1.确定参数和返回值，往往没有返回值void
+    // 2.确定终止条件
+    // 3.确定单层循环的逻辑
+    function backTracking(k: number, targetSum: number,startIndex:number,sum:number){
+        if(path.length === k){
+            if(sum === targetSum){
+                res.push(path.slice());
+                return ;
+            }
+        }
+
+        // 处理单层循环的逻辑
+        for(let i:number=startIndex;i<=9;i++){
+            path.push(i);
+            sum = sum+i;
+            backTracking(k,targetSum,i+1,sum);
+            // pop的次数和push的次数一样多
+            // 每次加入一个数，就会检查它符不符合
+            // 符合的话，就先放进结果数组再pop
+            // 不符合就直接pop出去
+            let popNum:number=path.pop();
+            sum = sum-popNum;
+        }
+    }
+
+    backTracking(k,n,1,0);
+    return res;
+
+};
+```
+
+### 6.九键2-9对应的字母组合
+
+https://leetcode.cn/problems/letter-combinations-of-a-phone-number/submissions/722240242/
+
+```ts
+function letterCombinations(digits: string): string[] {
+    // 输入有几个数字，就要进行几次for循环
+    // 首先将映射写出来
+    // 可以将问题用树形解构解决，考虑回溯算法
+    // 该函数接受一个参数digits是输入数字的组合
+    // 比如279,k=3
+    const k:number=digits.length;
+    if(k===0)return[];
+    // k也是最后结果中每一个组合的数组长度
+    const map = ['','','abc','def','ghi','jkl','mno','pqrs','tuv','wxyz'];
+    // 回溯算法三部曲
+    // 1.确定参数和返回值
+    // 2.确定终止条件
+    // 3.单层循环逻辑
+    let res=[];
+    let path=[];
+
+    function backTracking(k:number,digits:string,index:number){
+        // 三个参数：k代表一个组合的长度，digits代表用户按键字符串，index代表当前处理到的索引位置,比如abc的index就是0，该b了就是1
+        if(path.length === k){
+            // 要使用复制的值，否则对于数组来说是引用类型
+            res.push([...path]);
+            return ;
+        }
+        const curDigits:string = digits[index];
+        // digits="123",curDigits="1"
+        // 先将字符串转换成对应的数字
+        const letters = map[parseInt(curDigits)];
+
+        for(let v of letters){
+            // letters = "abc"
+            // v是单个的字符串，如‘a’,'b','c'
+            path.push(v);
+            // 处理其中的下一个元素
+            backTracking(k,digits,index+1);
+            path.pop();
+        }
+    }
+    backTracking(k,digits,0);
+    // res的格式是[["a","d"],["a","e"],["a","f"],["b","d"],["b","e"],["b","f"],["c","d"],["c","e"],["c","f"]]
+    // 要对于其中的每一个一维数组中的元素链接称一个字符串
+    return res.map(p=>p.join(""));
+};
+```
