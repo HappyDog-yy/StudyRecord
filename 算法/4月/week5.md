@@ -99,4 +99,47 @@ function combinationSum2(candidates: number[], target: number): number[][] {
 };
 ```
 
-### 
+### 3.分割回文串
+
+https://leetcode.cn/problems/palindrome-partitioning/submissions/722390665/
+
+```ts
+function partition(s: string): string[][] {
+    // 仍然使用回溯算法
+    let path:string[]=[];
+    let res:string[][]=[];
+
+    // 判断某个字符串是否是一个回文串
+    function isHW(s:string,startIndex:number,endIndex:number):boolean{
+        for(;startIndex<endIndex;startIndex++,endIndex--){
+            if(s[startIndex]!==s[endIndex]){return false;}
+        }return true;
+    }
+
+    // 回溯三部曲
+    // 1.确定参数和返回值
+    // 2.确定终止条件
+    // 3.确定单层搜索逻辑
+
+    function backTracking(s: string,startIndex:number):void{
+        // 先是终止条件的判断
+        if(startIndex>=s.length){
+            res.push([...path]);
+            return ;
+        }
+
+        // 单层循环逻辑
+        for(let i:number=startIndex;i<s.length;i++){
+            if(!isHW(s,startIndex,i)){
+                continue;
+            }
+            path.push(s.substring(startIndex,i+1));
+            backTracking(s,i+1);
+            path.pop();
+        }
+    }
+
+    backTracking(s,0);
+    return res;
+};
+```
