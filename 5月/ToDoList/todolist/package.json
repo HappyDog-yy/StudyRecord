@@ -1,5 +1,5 @@
 {
-  "name": "@iccy/todolist",
+  "name": "iccy-todolist",
   "private": false,
   "version": "1.0.0",
   "description": "基于React的TodoList组件",
@@ -49,7 +49,7 @@
   ,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourname/todolist.git"
+    "url": "git+https://github.com/HappyDog-yy/React-todolist.git"
   },
   "keywords": ["react", "todolist", "tailwindcss", "component"],
   "author": "iccy <roseyy1008@163.com>",
