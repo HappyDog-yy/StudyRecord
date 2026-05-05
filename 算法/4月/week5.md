@@ -143,3 +143,68 @@ function partition(s: string): string[][] {
     return res;
 };
 ```
+
+### 4.复原IP地址
+
+https://leetcode.cn/problems/restore-ip-addresses/
+
+```ts
+function restoreIpAddresses(s: string): string[] {
+    let res:string[]=[];
+    // res是一个字符数组，['1','1','1','1']
+    // 首先组要一个函数，检查每一位是否符合题目要求
+    // 检查的条件：0-255，整数，并且不能有前导0
+    function numCheck(str:string,startIndex:number,endIndex:number):boolean{
+        if(startIndex>endIndex)return false; 
+        // 提取指定索引之间的字符串，注意是左闭右开
+        let s:string = str.slice(startIndex,endIndex+1);
+        // 先将传入的字符串变成整数
+        const num:number=Number(s);
+        // 检查是不是整数
+        if(!Number.isInteger(num))return false;
+        // 检查是否在0-255之间
+        if(num<0 || num>255)return false;
+        // 检查前导0
+        // 下面的代码会导致00也通过，不符合题意
+        // if(num>0&&s[0]==='0')return false;
+        if(s.length>1&&s[0]==='0')return false;
+
+        return true;
+    }
+
+    // pointSum点号的个数，最终要有3个
+    function backTracking(s:string,startIndex:number,pointSum:number):void{
+        let length:number = s.length;
+        
+        // 终止条件：逗点的个数有三个
+        if(pointSum===3){
+            if(numCheck(s,startIndex,length-1)){
+                res.push(s);
+                return;
+                }else{return;}
+        }
+
+        // 单层循环逻辑
+        // 每次仅针对逗点前面的字串进行判断处理，因此只判断了前三个的合法性，第四个在终止条件出进行判读
+        // 在这里进行剪枝了，如果超过三位，直接删掉
+        for(let i:number=startIndex;i<Math.min(length,startIndex+3);i++){
+            //要处理的区间是[startIndex,i],i是不断增加的
+            if(numCheck(s,startIndex,i)){
+                // JS中的slice方法，可以作用于数组和字符串
+                // s.slice(start,end),提取数组中对应索引区间的元素，左闭右开，返回一个新数组，不改变原始数组
+                // JS中的splice方法，只能作用于数组
+                // s.splice(开始索引，删除个数，新添加的元素...),在原数组上就地操作
+                // 想要在字符串中插入一个元素，使用substring
+                const newArr=s.substring(0,i+1)+'.'+s.substring(i+1);
+                backTracking(newArr,i+2,pointSum+1);
+            // 此处加2的原因是中间加了一个逗点
+            }
+            
+        }
+    }
+
+    backTracking(s,0,0);
+    return res;
+    
+};
+```
