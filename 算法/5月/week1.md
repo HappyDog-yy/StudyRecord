@@ -97,3 +97,47 @@ function subsetsWithDup(nums: number[]): number[][] {
     return res;
 };
 ```
+
+### 3.波动数组的最长波动子序列元素个数-贪心算法
+
+https://leetcode.cn/problems/wiggle-subsequence/submissions/723655258/
+
+```ts
+function wiggleMaxLength(nums: number[]): number {
+    // 摆动序列
+    // 前面一个坡度和后面一个坡度异号就记录摆动，相邻的重复元素要去掉一个
+    // 这样就不用考虑平坡的特殊情况
+    const len:number = nums.length;
+    if(len===0)return 0;
+    if(len===1)return 1;
+    let arr1:number[]=[];
+    if(len>1){
+        arr1.push(nums[0]);
+        for(let i=1;i<len;i++){
+            if(nums[i]!==nums[i-1]){
+                arr1.push(nums[i]);
+            }
+        }
+    }
+    if(arr1.length === 1)return 1;
+    // 现在就没有平坡了
+    let res:number = 1;
+    let prevDiff:number = 0;
+    let curDiff:number = 0;
+    // 这里的循环终止条件不对，最后i=arr1.length-1的时候，i+1=arr1.length，会导致越界的问题出现
+    for(let i:number = 0;i<arr1.length;i++){
+        curDiff = arr1[i+1]-arr1[i];
+        // 这里初始的时候，第一个坡度被初始化为0，会导致if一直进不去的问题
+        // 所以无论如何也要不要忘记更新遍历条件
+        if(prevDiff*curDiff<0){
+            res++;
+        }
+        prevDiff = curDiff;
+    }
+
+    return res+1;
+    
+};
+```
+
+### 4.
