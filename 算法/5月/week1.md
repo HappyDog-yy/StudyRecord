@@ -181,3 +181,36 @@ function fib(n: number): number {
     return dp[n-1];
 };
 ```
+
+### 5.动态规划爬n层楼梯有几种方法
+
+https://leetcode.cn/problems/climbing-stairs/submissions/724055462/
+
+```ts
+function climbStairs(n: number): number {
+    // 动态规划五部曲
+    // 1.确定dp数组及其下标含义
+    // 题目往往要求n对应的数组元素是几，所以数组往往有n个元素
+    // 对应n=1，2，3，4……的结果
+    // 2.确定递推公式
+    // 3.dp数组如何初始化
+    // 4.确定遍历顺序
+    // 5.打印数组用于debug
+
+    // dp[1]=1,dp[2]=2
+    // dp[3]只和1，2有关系，因为达到这个三阶，不是从第一节迈上来的
+    // 就是从第二阶迈上来的
+    // 假设要爬到第五个台阶，一定是从第四个台阶迈一步或者从第三个台阶上迈两步实现的
+    // 因此只依赖于前面两个数的和，并且可以保证是到达第四个台阶的方法再加一步，一定和到达第三个台阶的方法再加两部不一样
+    // 递推公式：dp[i]=dp[i-1]+dp[i-2]
+    let dp:number[]=[];
+    dp[0]=1;
+    dp[1]=2;
+
+    for(let i:number = 2;i<n;i++){
+        dp[i] = dp[i-1]+dp[i-2];
+    }
+    console.log(dp);
+    return dp[n-1];
+};
+```
