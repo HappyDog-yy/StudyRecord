@@ -140,4 +140,44 @@ function wiggleMaxLength(nums: number[]): number {
 };
 ```
 
-### 4.
+### 4.动态规划入门题目--斐波那契数列
+
+https://leetcode.cn/problems/fibonacci-number/submissions/724030698/
+
+#### 4.1递归解决
+```ts
+function fib(n: number): number {
+    // 递归
+    if(n===0)return 0;
+    if(n===1)return 1;
+    // 下面是n>=2的所有情况
+    return fib(n-1)+fib(n-2);
+};
+```
+
+#### 4.2动态规划解决
+```ts
+function fib(n: number): number {
+    // 动态规划入门题目
+    // 动态规划五部曲
+    // 1.理解dp数组
+    // 2.确定递推公式
+    // 3.dp数组初始化
+    // 4.确定遍历顺序，从前到后还是从后到前
+    // 可以递推公式中理解，是前面推出后面还是后面推出前面
+    // 5.打印dp数组用于debug
+
+    let dp:number[] = [];
+    if(n<=0)return 0;
+    dp[0]=1;
+    dp[1]=1;
+    // 遍历顺序是从前到后的，因为是由前面的推出后面的
+    if(n>=2){
+        for(let i:number=2;i<=n-1;i++){
+            dp[i] = dp[i-1]  + dp[i-2];
+        }
+    }
+    console.log(dp);
+    return dp[n-1];
+};
+```
