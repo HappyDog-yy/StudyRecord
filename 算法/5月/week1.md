@@ -214,3 +214,22 @@ function climbStairs(n: number): number {
     return dp[n-1];
 };
 ```
+
+### 6.贪心算法--买卖股票的时机
+
+https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/submissions/725089748/
+
+```ts
+function maxProfit(prices: number[]): number {
+    // 我们可以就算出每一天的利润
+    // 如果大于0，就加进最后的结果中
+    // 否则直接进行下一次循环
+    let res:number = 0;
+    const len:number = prices.length;
+    if(len === 1) return 0;
+    for(let i:number = 1;i<len;i++){
+        res = res + Math.max(prices[i]-prices[i-1],0);
+    }
+    return res;
+};
+```
