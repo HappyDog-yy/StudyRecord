@@ -27,8 +27,38 @@ function minCostClimbingStairs(cost: number[]): number {
 };
 ```
 
-### 2.
+### 2.从左上走到右下格子的方法数
+
+https://leetcode.cn/problems/unique-paths/description/
 
 ```ts
+function uniquePaths(m: number, n: number): number {
+    // 使用动态规划来解决
+    // 动态规划五部曲
+    // 确定dp数组及其下表含义，往往是要求到n的结果，数组就是从0，n-1对应的关系
+    // 递推公式
+    // 初始化
+    // 打印验证
+    // 遍历顺序
+    // Array.from用于将包含了length属性的类数组对象转换成一个真正的数组
+    // 创建二位数组的两种方法
+    let res:number[][]=new Array(m).fill(0).map(()=>new Array(n).fill(0));
+    for(let j=0;j<n;j++){res[0][j]=1}
+    for(let i=0;i<m;i++){res[i][0]=1}
+    // 要到达m*n这个格子，有两种办法，一是m-1,n，二是m,n-1
+    // 所以res[m-1][n-1] = res[m-2][n-1]+res[m-1][n-2]
+    for(let i:number = 1;i<m;i++){
+        for(let j:number = 1;j<n;j++){
+            res[i][j] = res[i-1][j]+res[i][j-1];
+        }
+    }
+    for(let i:number = 0;i<m;i++){
+        for(let j:number = 0;j<n;j++){
+            console.log(res[i][j])
+        }
+    }
 
+    return res[m-1][n-1];
+    
+};
 ```
