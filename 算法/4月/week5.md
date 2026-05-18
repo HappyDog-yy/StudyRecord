@@ -208,3 +208,43 @@ function restoreIpAddresses(s: string): string[] {
     
 };
 ```
+
+### 5.有障碍的不同路径问题（动态规划解决）
+
+https://leetcode.cn/problems/unique-paths-ii/submissions/725788185/
+
+```ts
+function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
+    let m:number = obstacleGrid.length;
+    let n:number = obstacleGrid[0].length;
+    // 在之前的不同路径的数量上增加01系数即可
+    let dp:number[][] = new Array(m).fill(0).map(()=>new Array(n).fill(0));
+    // 初始化，依赖于上面一排和左边一列
+    // 先全部初始化为0，对于没出现障碍物之前的情况初始化为1
+    for(let i:number = 0;i<n;i++){
+        dp[0][i]=0
+    }
+    for(let i:number = 0;i<m;i++){
+        dp[i][0]=0
+    }
+    // 注意终止条件，当中间出现有障碍物，后面的全都不能过去了，直接终止循环即可
+    for(let i:number = 0;i<n&& obstacleGrid[0][i]===0;i++){
+        dp[0][i]=1
+    }
+    for(let i:number = 0;i<m&&obstacleGrid[i][0]===0;i++){
+        dp[i][0]=1
+    }
+
+    for(let i:number = 1;i<m;i++){
+        for(let j:number =1 ;j<n;j++){
+            // 还有一种情况是该位置本身就是一个障碍物，那么注定无法到达
+            if(obstacleGrid[i][j]===1){dp[i][j]=0}else{
+                dp[i][j] = dp[i-1][j]+dp[i][j-1];
+            }
+        }
+    }
+    console.log(dp);
+
+    return dp[m-1][n-1];
+};
+```
