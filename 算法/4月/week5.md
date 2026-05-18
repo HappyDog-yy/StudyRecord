@@ -248,3 +248,31 @@ function uniquePathsWithObstacles(obstacleGrid: number[][]): number {
     return dp[m-1][n-1];
 };
 ```
+
+### 6.整数拆分问题
+
+https://leetcode.cn/problems/integer-break/submissions/725800482/
+
+```ts
+function integerBreak(n: number): number {
+    // 常识：拆分成尽可能相同，差异小的数字乘积会更大，类比周长相同的正方形和长方形比较面积
+    // 拆分成两个数
+    // dp数组的含义
+    // dp[i]代表拆分数字i的得到的最大乘积
+    let dp:number[]=new Array(n+1).fill(0);
+    // 初始化
+    dp[0]=0;
+    dp[1]=0;
+    dp[2]=1;
+    
+    for(let i:number = 3;i<=n;i++){
+        for(let j:number = 1;j<i;j++){
+            dp[i]=Math.max(j*(i-j),j*dp[i-j],dp[i]);
+        }
+    }
+
+    console.log(dp)
+    return dp[n];
+    
+};
+```
