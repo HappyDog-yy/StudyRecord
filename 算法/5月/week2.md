@@ -144,3 +144,67 @@ function numTrees(n: number): number {
     
 };
 ```
+
+### 0-1背包问题
+
+https://kamacoder.com/problempage.php?pid=1046
+
+```ts
+// 0-1背包问题
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const input = [];
+
+rl.on('line', (line) => {
+    input.push(line);
+});
+
+// 首先获得输入的数据
+rl.on('close', () => {
+    // 分别获得一二三行的数据并存储在对应的变量中
+    // n是数组的长度，bagweight是背包能装的物品重量
+    let [n, bagweight] = input[0].split(' ').map(Number);
+    let weight = input[1].split(' ').map(Number);
+    let value = input[2].split(' ').map(Number);
+
+    // 创建二位数组dp用于存放结果
+    // dp[i][j]代表在物品0-i中任取，放在重量为j的背包的最大价值
+    let dp = new Array(n).fill(0).map(() => new Array(bagweight + 1).fill(0));
+    // 背包中能够装载的最大价值
+    // 如果i个物品不装进去，价值就是dp[i-1][j]
+    // 如果i个物品装进去，价值就是dp[i-1][j-weight[i]]+value[i]
+    // 可以看到，dp[i][j]依赖于其左上方的数据
+    // 因此要初始化第一行和第一列
+    // 行代表物品，列代表背包的重量，
+    // for (let i = 0; i < n; i++){
+    //     // j=0,即背包能装的重量为0
+    //     dp[i][0] = 0;
+    // }
+    // 对于第一行，代表的都是第一个物品装进去的价值
+    // 如果第一个物品的重量大于背包的重量，就是0，装不进去，否则就是第一个物品的重量
+    for (let j = 0; j <= bagweight; j++){
+        if(j>=weight[0]){dp[0][j]=value[0]}
+    }
+
+    // 接下来对后面的进行遍历，得到数组中所有的数值
+    for (let i = 1; i < n; i++){
+        for (let j = 1; j <= bagweight; j++){
+            // 如果j<weight[i],一定装不下
+            if (j < weight[i]) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);
+            }
+        }
+    }
+
+    // console.log(dp);
+    console.log(dp[n-1][bagweight]) ;
+    return dp[n-1][bagweight];
+})
+```
