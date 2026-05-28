@@ -110,3 +110,37 @@ function cal(a:number,b:number):number[]|number{
 console.log(cal(2,2))
 
 ```
+
+### 4.不同的二叉搜索树种类（动态规划）
+
+https://leetcode.cn/problems/unique-binary-search-trees/submissions/727650499/
+
+```ts
+function numTrees(n: number): number {
+    // 动态规划五部曲
+    // 确定dp数组及其含义
+    // 初始化
+    // 确定遍历顺序
+    // 地推公式
+    // 打印验证
+    // 以n=3为例，分为3中情况
+    // 1为根节点，左侧有0个节点，右子树有2个节点，dp[0]*dp[2]
+    // 2为根节点，左侧有1个节点，右子树有1个节点,dp[1]*dp[1]
+    // 3为根节点，左侧有2个节点，右子树有0个节点,dp[2]*dp[0]
+    // 三者相加得到对应的dp[3]的结果
+    // 得到递推公式,j为根节点，左子树一共有j-1个节点，右子树一共有i-j个节点
+    // dp[i] = dp[i]+dp[j-1]*dp[i-j]
+    let dp:number[] = new Array(n+1).fill(0);
+    dp[0]=1;
+    dp[1]=1;
+    dp[2] =2;
+    for(let i=3;i<=n;i++){
+        for(let j:number = 1;j<=i;j++){
+            dp[i] = dp[i]+dp[j-1]*dp[i-j];
+        }
+    }
+    console.log(dp);
+    return dp[n];
+    
+};
+```
