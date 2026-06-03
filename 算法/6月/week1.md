@@ -28,3 +28,27 @@ function generate(numRows: number): number[][] {
     return res;
 };
 ```
+
+### 2.打家劫舍（动态规划）
+
+https://leetcode.cn/problems/house-robber/submissions/729016618/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+function rob(nums: number[]): number {
+    // 假设dp[i]代表一共有i间房屋偷到的钱的最大值
+    // dp[i]=max（两种方式）
+    // 情况一：i-1不偷，这时候就可以偷i,dp[i]=dp[i-2]+nums[i]
+    // 情况二：i-1偷了，这时候就不能偷i,dp[i]=dp[i-1]
+
+    const len:number = nums.length;
+    let dp:number[] = new Array(len).fill(0);
+    dp[0]=nums[0];
+    dp[1] = Math.max(nums[0],nums[1]);
+    for(let i:number = 2;i<len;i++){
+        dp[i] = Math.max(dp[i-2]+nums[i],dp[i-1]);
+    }
+    console.log(dp);
+    return dp[len-1];
+    
+};
+```
