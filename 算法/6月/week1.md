@@ -52,3 +52,36 @@ function rob(nums: number[]): number {
     
 };
 ```
+
+### 3.完全平方数
+
+https://leetcode.cn/problems/perfect-squares/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+function numSquares(n: number): number {
+    // 动态规划
+    // 1.确定dp数组含义
+    // 2.递推公式
+    // 3.初始化
+    // 4.遍历顺序
+    // 5.打印检验
+
+    // dp[j] = dp[j-i*i]+1;
+    let dp:number[]=new Array(n+1).fill(n);
+    dp[0]=0;
+    dp[1]=1;
+    dp[2]=2;
+    dp[3] =3;
+    dp[4] = Math.min(dp[4-1*1]+1,dp[4-2*2]+1);
+    // 遍历一个i的时候，将dp[j]初始化为对应的dp[j-i*i]+1,后面的都和当前的擂主比较，取最小值
+    for(let j:number=5;j<=n;j++){
+        for(let i:number=1;i*i<=j;i++){
+            dp[j]=Math.min(dp[j],dp[j-i*i]+1);
+        }
+    }
+
+    console.log(dp);
+    return dp[n];
+    
+};
+```
