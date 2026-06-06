@@ -85,3 +85,28 @@ function numSquares(n: number): number {
     
 };
 ```
+
+### 4.零钱兑换问题（动态规划）
+
+https://leetcode.cn/problems/coin-change/submissions/729551745/?envType=study-plan-v2&envId=top-100-liked
+
+```ts
+function coinChange(coins: number[], amount: number): number {
+    // 动态规划五部曲
+    // dp数组的含义+递推公式+遍历顺序+打印验证
+    // dp[i]代表凑够i元需要的硬币枚数
+    // dp[i]=min(dp[i-coins[j]]+1),如果i-coins[j]<0
+    let dp:number[]=new Array(amount+1).fill(12345);
+    dp[0]=0;
+
+    for(let i:number=1;i<=amount;i++){
+        for(let j:number=0;j<coins.length;j++){
+            // 注意要加一层判断，因为有可能对应的数组索引是一个负值
+            if(i-coins[j]<0)continue;
+            dp[i]=Math.min(dp[i],dp[i-coins[j]]+1);
+        }
+    }
+    console.log(dp);
+    return dp[amount]===12345?-1:dp[amount];
+};
+```
